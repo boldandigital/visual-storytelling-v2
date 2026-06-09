@@ -1,19 +1,23 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 'react';
 
 /**
- * Wraps content in a fade+rise reveal triggered by entering the viewport.
- * Includes a 1.2s fallback so content is never permanently hidden.
+ * Wraps content in a fade reveal triggered by entering the viewport.
+ * Merges caller-provided style with the reveal's own opacity
+ * transition. Does NOT touch transform — caller owns transform so
+ * 3D positions can be driven by per-frame JS.
  */
 export default function Reveal({
   children,
   delay = 0,
   className = '',
+  style,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   delay?: number;
   className?: string;
+  style?: CSSProperties;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [shown, setShown] = useState(false);
@@ -33,14 +37,14 @@ export default function Reveal({
             }
           });
         },
-        { threshold: 0.1, rootMargin: '0px 0px -8% 0px' }
+        { threshold: 0.05, rootMargin: '0px 0px -5% 0px' }
       );
       observer.observe(el);
     } else {
       setShown(true);
     }
 
-    const fallback = window.setTimeout(() => setShown(true), 1200);
+    const fallback = window.setTimeout(() => setShown(true), 1500);
     return () => {
       observer?.disconnect();
       window.clearTimeout(fallback);
@@ -53,9 +57,9 @@ export default function Reveal({
       className={className}
       style={{
         opacity: shown ? 1 : 0,
-        transform: shown ? 'translateY(0)' : 'translateY(28px)',
-        transition: `opacity 0.85s cubic-bezier(0.2, 0.65, 0.2, 1) ${delay}ms, transform 0.85s cubic-bezier(0.2, 0.65, 0.2, 1) ${delay}ms`,
+        transition: `opacity 0.8s cubic-bezier(0.2, 0.65, 0.2, 1) ${delay}ms`,
         willChange: 'opacity, transform',
+        ...style,
       }}
     >
       {children}

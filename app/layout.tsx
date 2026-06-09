@@ -18,8 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     title: 'Bold And Digital — Visual Storytelling Studio',
-    description:
-      'Three-dimensional web, AI automation, brand strategy. For the bold.',
+    description: 'Three-dimensional web, AI automation, brand strategy. For the bold.',
     images: [{ url: '/icon-512.png', width: 512, height: 512, alt: 'Bold And Digital' }],
   },
   twitter: {
@@ -32,16 +31,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#000408',
   width: 'device-width',
   initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>{children}</body>

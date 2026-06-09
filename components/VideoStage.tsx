@@ -3,98 +3,94 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * The site is the video. This component:
- * 1. Mounts the scroll-bg.mp4 as a fixed full-viewport background
- * 2. Syncs video.currentTime to window.scrollY progress
- * 3. Fades the video in once metadata is ready
+ * Plays the source video UNFILTERED — no hue-rotate, no desaturation.
  *
- * The page content scrolls over this; each section is a "moment" of the
- * video's arc (abyss → dive → cyberspace → reveal).
+ * Time model:
+ *  - `currentTime` is bound 1:1 to scroll position. Scroll 0% = 0s,
+ *    scroll 100% = 1.55s.
+ *  - The video only plays while the user is scrolling. When idle
+ *    the video pauses (frozen at the user's last position).
  */
+const VIDEO_DURATION = 1.6;        // seconds
+const SCROLL_BIND_FACTOR = 0.97;   // use 0-97% of the video for the scroll
+
 export default function VideoStage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const rafRef = useRef<number | null>(null);
-  const readyRef = useRef(false);
+  const targetTimeRef = useRef<number>(0);
+  const lastScrollTime = useRef<number>(performance.now());
+  const isScrolling = useRef<boolean>(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const v = videoRef.current;
+    if (!v) return;
 
-    const syncToScroll = () => {
-      if (!readyRef.current || !video.duration || !isFinite(video.duration)) return;
+    v.muted = true;
+    v.playsInline = true;
+    v.preload = 'auto';
+
+    const setReady = () => { v.dataset.ready = 'true'; };
+    v.addEventListener('loadeddata', setReady);
+    v.addEventListener('canplay', setReady);
+
+    const computeTarget = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const progress = max > 0 ? window.scrollY / max : 0;
-      const target = progress * (video.duration - 0.05);
-      if (Math.abs(video.currentTime - target) > 0.04) {
-        video.currentTime = target;
-      }
-    };
-
-    const onReady = () => {
-      readyRef.current = true;
-      video.dataset.ready = 'true';
-      syncToScroll();
+      return progress * SCROLL_BIND_FACTOR * VIDEO_DURATION;
     };
 
     const onScroll = () => {
-      if (rafRef.current !== null) return;
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        syncToScroll();
-      });
+      lastScrollTime.current = performance.now();
+      isScrolling.current = true;
+      // Set target immediately on scroll
+      targetTimeRef.current = computeTarget();
     };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
 
-    // The video may have already loaded by the time the React effect
-    // runs (Next.js SSR + hydration race). Check readyState directly
-    // so we don't depend on events that already fired and were lost.
-    // readyState >= 1 = HAVE_METADATA, enough to read duration.
-    let pollId: number | null = null;
-    const ensureReady = () => {
-      if (video.readyState >= 1) {
-        onReady();
-        if (pollId !== null) {
-          window.clearInterval(pollId);
-          pollId = null;
+    // Sentinel: 100ms after last scroll event, mark as idle
+    let idleCheck: number | null = null;
+
+    let lastT = performance.now();
+    const tick = () => {
+      const now = performance.now();
+      lastT = now;
+
+      // Check if still scrolling (within 100ms of last scroll)
+      const isActive = (now - lastScrollTime.current) < 100;
+
+      // Smoothly move video.currentTime toward the target
+      const cur = v.currentTime;
+      const tgt = targetTimeRef.current;
+      const next = cur + (tgt - cur) * 0.32;
+      v.currentTime = Math.max(0, Math.min(SCROLL_BIND_FACTOR * VIDEO_DURATION, next));
+
+      // Schedule idle check
+      if (isActive) {
+        if (idleCheck !== null) {
+          window.clearTimeout(idleCheck);
+          idleCheck = null;
+        }
+        isScrolling.current = true;
+      } else {
+        if (idleCheck === null) {
+          idleCheck = window.setTimeout(() => {
+            isScrolling.current = false;
+            idleCheck = null;
+          }, 100);
         }
       }
+
+      rafRef.current = requestAnimationFrame(tick);
     };
-    ensureReady();
-    if (video.readyState < 1) {
-      video.addEventListener('loadedmetadata', onReady);
-      video.addEventListener('canplay', onReady);
-      // Fallback poll in case events are eaten
-      let polls = 0;
-      pollId = window.setInterval(() => {
-        polls++;
-        if (video.readyState >= 1) {
-          onReady();
-          if (pollId !== null) {
-            window.clearInterval(pollId);
-            pollId = null;
-          }
-        } else if (polls > 25) {
-          if (pollId !== null) {
-            window.clearInterval(pollId);
-            pollId = null;
-          }
-        }
-      }, 200);
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    onScroll(); // initial sync
-
-    video.play().catch(() => { /* autoplay may be blocked */ });
+    rafRef.current = requestAnimationFrame(tick);
 
     return () => {
-      video.removeEventListener('loadedmetadata', onReady);
-      video.removeEventListener('canplay', onReady);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      if (pollId !== null) window.clearInterval(pollId);
-      video.pause();
+      if (idleCheck !== null) window.clearTimeout(idleCheck);
     };
   }, []);
 
@@ -105,9 +101,8 @@ export default function VideoStage() {
         src="/videos/scroll-bg.mp4"
         muted
         playsInline
-        loop={false}
         preload="auto"
-        onContextMenu={(e) => e.preventDefault()}
+        loop={false}
       />
     </div>
   );
