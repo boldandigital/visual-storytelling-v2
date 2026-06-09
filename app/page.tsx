@@ -7,12 +7,14 @@ import Process from '@/components/Process';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollVideo from '@/components/ScrollVideo';
+import LogoOverlay from '@/components/LogoOverlay';
 
 export default function HomePage() {
   return (
     <>
       <ScrollVideo />
       <HeroScene />
+      <LogoOverlay />
       <Navbar />
       <main>
         <Hero />

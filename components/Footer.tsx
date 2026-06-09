@@ -11,7 +11,10 @@ export default function Footer() {
       <div className={`container ${styles.row}`}>
         <div className={styles.left}>
           <div className={styles.brandRow}>
-            <span className={styles.brandMark} aria-hidden="true" />
+            <span className={styles.brandMark} aria-hidden="true">
+              <span className={styles.brandMarkB}>B</span>
+              <span className={styles.brandMarkD}>D</span>
+            </span>
             <span className={styles.brandText}>
               <span className="cyan-bracket">[</span>
               BOLD_AND_DIGITAL

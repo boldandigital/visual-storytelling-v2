@@ -28,6 +28,8 @@ export default function Navbar() {
         <Link href="/" className={styles.brand} aria-label="Bold And Digital home">
           <span className={styles.brandMark} aria-hidden="true">
             <span className={styles.brandMarkInner} />
+            <span className={styles.brandMarkB}>B</span>
+            <span className={styles.brandMarkD}>D</span>
           </span>
           <span className={styles.brandText}>
             <span className="cyan-bracket">[</span>

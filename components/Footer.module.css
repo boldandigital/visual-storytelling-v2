@@ -32,20 +32,32 @@
 }
 
 .brandMark {
-  width: 16px;
-  height: 16px;
-  border: 1px solid var(--color-cyan);
-  display: inline-block;
   position: relative;
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  flex-shrink: 0;
+  border: 1px solid var(--color-cyan);
+  box-shadow: 0 0 8px var(--color-cyan-soft);
 }
 
-.brandMark::after {
-  content: '';
+.brandMarkB,
+.brandMarkD {
   position: absolute;
-  inset: 4px;
-  background: var(--color-cyan);
-  box-shadow: 0 0 8px var(--color-cyan);
+  top: 50%;
+  left: 50%;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 8px;
+  line-height: 1;
+  color: var(--color-cyan);
+  text-shadow: 0 0 4px var(--color-cyan-glow);
+  letter-spacing: -0.5px;
+  transform: translateY(-50%);
 }
+
+.brandMarkB { left: 22%; }
+.brandMarkD { left: 60%; }
 
 .brandText {
   color: var(--color-text);

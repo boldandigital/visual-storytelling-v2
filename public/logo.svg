@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Bold And Digital — BD mark">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer targeting reticle (corner brackets) -->
+  <g fill="none" stroke="#00ffff" stroke-width="5" stroke-linecap="square" filter="url(#glow)">
+    <polyline points="20,56 20,20 56,20"/>
+    <polyline points="200,20 236,20 236,56"/>
+    <polyline points="236,200 236,236 200,236"/>
+    <polyline points="56,236 20,236 20,200"/>
+  </g>
+
+  <!-- BD monogram: solid blocks, holes punched out by black rectangles -->
+  <g filter="url(#glow)">
+    <!-- B block (left): a 50x96 solid rectangle with the two interior holes punched -->
+    <rect x="50" y="80" width="50" height="96" fill="#00ffff"/>
+    <!-- top hole of B (waist-up negative space) -->
+    <rect x="62" y="92" width="26" height="22" fill="#000000"/>
+    <!-- bottom hole of B (waist-down negative space, larger) -->
+    <rect x="62" y="132" width="26" height="32" fill="#000000"/>
+
+    <!-- D block (right): a 50x96 solid rectangle with one big interior hole -->
+    <rect x="156" y="80" width="50" height="96" fill="#00ffff"/>
+    <!-- single large hole for the D bowl -->
+    <rect x="168" y="92" width="26" height="72" fill="#000000"/>
+  </g>
+
+  <!-- Center pulse dot -->
+  <circle cx="128" cy="128" r="4" fill="#00ffff" filter="url(#glow)"/>
+</svg>
