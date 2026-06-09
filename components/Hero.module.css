@@ -1,0 +1,78 @@
+.hero {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+}
+
+.inner {
+  position: relative;
+}
+
+.eyebrow,
+.title,
+.lede,
+.actions {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.65, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.65, 0.2, 1);
+}
+
+.hero :global([data-mounted='true']).eyebrow,
+.hero :global([data-mounted='true']).title,
+.hero :global([data-mounted='true']).lede,
+.hero :global([data-mounted='true']).actions {
+  opacity: 1;
+  transform: none;
+}
+
+.title {
+  transition-delay: 120ms;
+  max-width: 18ch;
+  margin-bottom: 1.25rem;
+}
+
+.title em {
+  font-style: italic;
+  color: var(--color-cyan);
+  font-weight: 500;
+}
+
+.lede {
+  transition-delay: 240ms;
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  max-width: 52ch;
+  margin-bottom: 2.25rem;
+}
+
+.actions {
+  transition-delay: 360ms;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: -3rem;
+  left: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.line {
+  width: 40px;
+  height: 1px;
+  background: var(--color-cyan);
+  display: inline-block;
+}

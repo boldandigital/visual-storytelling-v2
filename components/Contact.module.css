@@ -1,0 +1,18 @@
+.wrap {
+  z-index: 2;
+  position: relative;
+}
+
+.card {
+  padding: clamp(2rem, 5vw, 3.5rem);
+  text-align: left;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.75rem;
+}
