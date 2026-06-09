@@ -2,48 +2,64 @@ import Reveal from './Reveal';
 import styles from './Process.module.css';
 
 const steps = [
-  { n: '01', t: 'Discover', d: 'Workshops, audits and a sharp brief.' },
-  { n: '02', t: 'Design', d: 'Brand systems, motion, and 3D direction.' },
-  { n: '03', t: 'Build', d: 'Next.js + Three.js, deployed at the edge.' },
-  { n: '04', t: 'Grow', d: 'GEO, content and compounding improvements.' },
+  {
+    n: '01',
+    title: 'Discover',
+    duration: '2 days',
+    desc: 'A tight kickoff. We pull apart your funnel, audit your stack, and write the brief that actually de-risks the work.',
+  },
+  {
+    n: '02',
+    title: 'Design',
+    duration: '1–2 weeks',
+    desc: 'Identity, motion, interaction — designed in a single visual language that ships the same way it looks in Figma.',
+  },
+  {
+    n: '03',
+    title: 'Build',
+    duration: '4–8 weeks',
+    desc: 'Next.js, Three.js, edge-deployed. We ship in weekly drops so you see real progress, not slide decks.',
+  },
+  {
+    n: '04',
+    title: 'Grow',
+    duration: 'ongoing',
+    desc: 'GEO, content, automation. We keep the momentum going past launch so the project pays for itself.',
+  },
 ];
 
 export default function Process() {
   return (
-    <section id="process" className={`section ${styles.wrap}`}>
+    <section id="process" className={`section ${styles.section}`}>
       <div className="container">
         <Reveal>
           <span className="eyebrow">// process.run</span>
         </Reveal>
         <Reveal delay={80}>
-          <h2>
-            From brief
+          <h2 className="h2">
+            FROM BRIEF TO
             <br />
-            <span className="gradient-text">to shipping fast</span>
-            <span className="cyan-bracket">.</span>
+            SHIPPING FAST.
           </h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className={styles.intro}>
-            Four phases. No retainer theatre. No endless decks.
+          <p className="lead" style={{ marginBottom: '4rem' }}>
+            <span className="prompt">{'>'}</span> Four phases. No retainer theatre. No endless decks.
           </p>
         </Reveal>
 
-        <ol className={styles.steps}>
+        <ol className={styles.list}>
           {steps.map((s, i) => (
-            <Reveal as="li" key={s.n} delay={i * 80}>
-              <div className="frame">
-                <div className={styles.stepInner}>
-                  <div className={styles.stepHeader}>
-                    <span className={styles.num}>[{s.n}]</span>
-                    <span className={styles.arrow}>
-                      <span className="cyan-bracket">→</span>
-                    </span>
-                  </div>
-                  <h3 className={styles.title}>{s.t}</h3>
-                  <p className={styles.desc}>{s.d}</p>
+            <Reveal key={s.n} delay={i * 100}>
+              <li className={styles.step}>
+                <div className={styles.stepHeader}>
+                  <span className={styles.stepN}>// {s.n}</span>
+                  <span className={styles.stepDuration}>{s.duration}</span>
                 </div>
-              </div>
+                <h3 className={styles.stepTitle}>{s.title}</h3>
+                <p className={styles.stepDesc}>{s.desc}</p>
+                <span className={styles.stepAccent} />
+              </li>
             </Reveal>
           ))}
         </ol>

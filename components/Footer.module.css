@@ -1,129 +1,127 @@
 .footer {
   position: relative;
-  z-index: 2;
-  border-top: 1px solid var(--color-border);
-  padding: 3.5rem 0 0;
-  margin-top: 4rem;
-  background: rgba(0, 0, 0, 0.6);
+  z-index: 3;
+  padding: 4rem 0 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.85) 30%);
+  border-top: 1px solid var(--color-line);
 }
 
 .row {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
+  grid-template-columns: 1.4fr 1.4fr 1fr;
   gap: 3rem;
-  align-items: start;
-  padding-bottom: 2.5rem;
+  padding-bottom: 3rem;
 }
 
-.left {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+@media (max-width: 860px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
+
+.left { }
 
 .brandRow {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  font-family: var(--font-mono);
+  gap: 0.75rem;
   font-size: 0.9rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
 }
 
 .brandMark {
-  position: relative;
-  width: 22px;
-  height: 22px;
-  display: inline-block;
-  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  height: 24px;
+  padding: 0 6px;
   border: 1px solid var(--color-cyan);
-  box-shadow: 0 0 8px var(--color-cyan-soft);
-}
-
-.brandMarkB,
-.brandMarkD {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-family: var(--font-mono);
+  background: rgba(0, 255, 255, 0.04);
+  box-shadow: 0 0 10px var(--color-cyan-soft), inset 0 0 8px rgba(0, 255, 255, 0.08);
   font-weight: 600;
-  font-size: 8px;
-  line-height: 1;
+  font-size: 0.7rem;
   color: var(--color-cyan);
-  text-shadow: 0 0 4px var(--color-cyan-glow);
   letter-spacing: -0.5px;
-  transform: translateY(-50%);
+  text-shadow: 0 0 4px var(--color-cyan-glow);
 }
 
-.brandMarkB { left: 22%; }
-.brandMarkD { left: 60%; }
+.brandMarkB, .brandMarkPlus, .brandMarkD {
+  display: inline-block;
+  line-height: 1;
+}
+.brandMarkPlus { opacity: 0.7; margin: 0 1px; }
 
 .brandText {
   color: var(--color-text);
+  letter-spacing: 0.16em;
 }
 
 .tagline {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--color-text-dim);
   letter-spacing: 0.08em;
-  text-transform: lowercase;
 }
 
 .middle {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  gap: 0.5rem;
 }
 
 .statusLine {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 0.3rem 0;
-  border-bottom: 1px solid var(--color-border-dim);
-}
-
-.statusLine:last-child {
-  border-bottom: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  font-size: 0.78rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed #1a2530;
 }
 
 .statusKey {
   color: var(--color-text-dim);
-  text-transform: uppercase;
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  min-width: 80px;
 }
 
 .statusVal {
   color: var(--color-cyan);
-  text-transform: lowercase;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
 }
 
 .right {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+@media (max-width: 860px) {
+  .right { align-items: flex-start; }
 }
 
 .links {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
+  text-align: right;
+}
+
+@media (max-width: 860px) {
+  .links { text-align: left; flex-direction: row; flex-wrap: wrap; gap: 0.75rem; }
 }
 
 .links a {
-  color: var(--color-text-muted);
-  transition: color 0.15s ease;
+  font-size: 0.78rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  transition: color 0.2s ease;
 }
 
 .links a:hover {
@@ -131,45 +129,27 @@
 }
 
 .copy {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--color-text-dim);
-  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+  text-align: right;
 }
 
-/* Barcode strip at the bottom — visual signature */
+@media (max-width: 860px) {
+  .copy { text-align: left; }
+}
+
 .barcode {
   display: flex;
-  gap: 2px;
-  padding: 0.75rem var(--gutter);
-  border-top: 1px solid var(--color-border-dim);
-  background: rgba(0, 0, 0, 0.5);
+  align-items: flex-end;
+  height: 18px;
+  gap: 1px;
+  border-top: 1px solid #1a2530;
+  padding: 6px 0;
 }
 
 .barcode span {
-  height: 24px;
+  display: inline-block;
+  height: 100%;
   background: var(--color-cyan);
-  opacity: 0.4;
-  flex: 1;
-}
-
-.barcode span:nth-child(odd) { opacity: 0.7; }
-.barcode span:nth-child(3n) { opacity: 0.2; }
-.barcode span:nth-child(5n) { opacity: 0.9; }
-.barcode span:nth-child(7n) { opacity: 0.3; }
-
-.barcode span:nth-child(1)  { flex: 0.5; }
-.barcode span:nth-child(4)  { flex: 0.3; }
-.barcode span:nth-child(6)  { flex: 0.8; }
-.barcode span:nth-child(9)  { flex: 0.4; }
-.barcode span:nth-child(12) { flex: 0.6; }
-.barcode span:nth-child(15) { flex: 0.7; }
-.barcode span:nth-child(18) { flex: 0.3; }
-.barcode span:nth-child(21) { flex: 0.5; }
-.barcode span:nth-child(24) { flex: 0.6; }
-
-@media (max-width: 768px) {
-  .row {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
 }

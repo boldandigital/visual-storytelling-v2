@@ -1,0 +1,79 @@
+.wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  transition: opacity 0.05s linear;
+}
+
+.backing {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 1) 70%);
+  z-index: -1;
+}
+
+.mark {
+  position: relative;
+  width: clamp(220px, 32vw, 360px);
+  color: var(--color-cyan);
+  filter: drop-shadow(0 0 16px var(--color-cyan-glow)) drop-shadow(0 0 48px rgba(0, 255, 255, 0.25));
+  animation: markPulse 2.4s ease-in-out infinite;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+}
+
+@keyframes markPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 16px var(--color-cyan-glow)) drop-shadow(0 0 48px rgba(0, 255, 255, 0.25));
+  }
+  50% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 24px var(--color-cyan)) drop-shadow(0 0 80px rgba(0, 255, 255, 0.4));
+  }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  color: var(--color-cyan);
+  letter-spacing: 0.28em;
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+.brandName {
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  color: var(--color-text);
+  letter-spacing: 0.22em;
+  font-weight: 500;
+}
+
+.subline {
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.18em;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}

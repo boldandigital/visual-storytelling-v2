@@ -1,92 +1,73 @@
-.wrap {
-  z-index: 2;
+.section {
   position: relative;
 }
 
-.intro {
-  margin: 1.25rem 0 3.5rem;
-  max-width: 56ch;
-}
-
-.steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0;
-  border: 1px solid var(--color-border);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  position: relative;
 }
 
-.steps li {
-  border-right: 1px solid var(--color-border);
-  border-bottom: none !important;
+.step {
+  position: relative;
+  padding: 1.5rem 1.25rem 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--color-line);
+  overflow: hidden;
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-.steps li:last-child {
-  border-right: none;
-}
-
-.steps li .frame {
-  border: none;
-  background: transparent;
-  padding: 0;
-  height: 100%;
-}
-
-.steps li .frame:hover {
+.step:hover {
+  border-color: var(--color-cyan);
   background: rgba(0, 255, 255, 0.03);
-  transform: none;
-  box-shadow: none;
-}
-
-.stepInner {
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  height: 100%;
 }
 
 .stepHeader {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-.num {
-  font-family: var(--font-mono);
-  color: var(--color-cyan);
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   letter-spacing: 0.18em;
-  font-weight: 500;
+  color: var(--color-text-dim);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
 }
 
-.arrow {
-  font-size: 1rem;
+.stepN {
+  color: var(--color-cyan);
 }
 
-.title {
-  font-family: var(--font-display);
+.stepDuration {
+  color: var(--color-text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.stepTitle {
   font-size: 1.5rem;
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+  margin-bottom: 0.85rem;
   color: var(--color-text);
-  line-height: 1;
 }
 
-.desc {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
+.stepDesc {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--color-text-dim);
 }
 
-@media (max-width: 900px) {
-  .steps li {
-    border-right: none;
-    border-bottom: 1px solid var(--color-border) !important;
-  }
-  .steps li:last-child {
-    border-bottom: none !important;
-  }
+.stepAccent {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-cyan);
+  box-shadow: 0 0 6px var(--color-cyan);
+  transition: width 0.4s ease;
+}
+
+.step:hover .stepAccent {
+  width: 100%;
 }

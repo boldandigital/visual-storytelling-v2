@@ -5,9 +5,6 @@ const buildDate = new Date()
   .replace('T', ' ')
   .slice(0, 19) + ' UTC';
 
-// Vercel injects VERCEL_GIT_COMMIT_SHA at build time. This makes the
-// footer reflect the *exact* commit the deployed bundle was built from,
-// so we can verify the live build matches what we just pushed.
 const buildSha =
   process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? 'dev';
 const buildShort = process.env.VERCEL ? ` · ${buildSha}` : ' · local';
@@ -20,16 +17,17 @@ export default function Footer() {
           <div className={styles.brandRow}>
             <span className={styles.brandMark} aria-hidden="true">
               <span className={styles.brandMarkB}>B</span>
+              <span className={styles.brandMarkPlus}>+</span>
               <span className={styles.brandMarkD}>D</span>
             </span>
             <span className={styles.brandText}>
-              <span className="cyan-bracket">[</span>
+              <span className="bk">[</span>
               BOLD_AND_DIGITAL
-              <span className="cyan-bracket">]</span>
+              <span className="bk">]</span>
             </span>
           </div>
           <p className={styles.tagline}>
-            <span className="cyan-bracket">// </span>
+            <span className="bk">// </span>
             Visual storytelling studio · est. 2022
           </p>
         </div>
@@ -37,7 +35,7 @@ export default function Footer() {
         <div className={styles.middle}>
           <div className={styles.statusLine}>
             <span className={styles.statusKey}>BUILD</span>
-            <span className={styles.statusVal}>v2.0.0{buildShort}</span>
+            <span className={styles.statusVal}>v3.0.0{buildShort}</span>
           </div>
           <div className={styles.statusLine}>
             <span className={styles.statusKey}>DEPLOYED</span>
@@ -47,6 +45,10 @@ export default function Footer() {
             <span className={styles.statusKey}>STACK</span>
             <span className={styles.statusVal}>next.js + three.js</span>
           </div>
+          <div className={styles.statusLine}>
+            <span className={styles.statusKey}>CHANNEL</span>
+            <span className={styles.statusVal}>hello@boldandigital.com</span>
+          </div>
         </div>
 
         <div className={styles.right}>
@@ -54,7 +56,7 @@ export default function Footer() {
             <a href="#services">services</a>
             <a href="#work">work</a>
             <a href="#process">process</a>
-            <a href="mailto:hello@boldandigital.com">contact</a>
+            <a href="#contact">contact</a>
           </nav>
           <p className={styles.copy}>
             © {new Date().getFullYear()} Bold And Digital LLC. Built in the open.
@@ -63,30 +65,12 @@ export default function Footer() {
       </div>
 
       <div className={styles.barcode} aria-hidden="true">
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
+        {Array.from({ length: 32 }).map((_, i) => (
+          <span
+            key={i}
+            style={{ width: `${(i * 7) % 4 + 1}px`, opacity: (i * 13) % 7 === 0 ? 0.9 : 0.4 }}
+          />
+        ))}
       </div>
     </footer>
   );

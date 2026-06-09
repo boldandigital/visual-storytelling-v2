@@ -1,68 +1,27 @@
-/* Bold And Digital v2 — Rebuilt to match scroll-bg.mp4
-   Pitch black void · Electric cyan emissives · Wireframe grid · Mono-tech type */
-
-:root {
-  /* Pure dark palette — derived from the video */
-  --color-void: #000000;
-  --color-void-soft: #050a14;
-  --color-navy-deep: #0a192f;
-  --color-navy: #0a192f;
-
-  /* Electric cyan emissives — dominant accents */
-  --color-cyan: #00ffff;
-  --color-cyan-bright: #1fa2ff;
-  --color-cyan-soft: rgba(0, 255, 255, 0.12);
-  --color-cyan-glow: rgba(0, 255, 255, 0.4);
-  --color-cyan-dim: rgba(0, 255, 255, 0.55);
-
-  /* Greys (cool-tinted to match the cyan) */
-  --color-text: #e8f4ff;
-  --color-text-muted: rgba(232, 244, 255, 0.6);
-  --color-text-dim: rgba(232, 244, 255, 0.4);
-  --color-border: rgba(0, 255, 255, 0.12);
-  --color-border-dim: rgba(0, 255, 255, 0.06);
-
-  /* Type — mono-led, matches terminal/wireframe aesthetic */
-  --font-display: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
-
-  --radius: 0px; /* No rounded corners — wireframe / brutalist */
-  --radius-sm: 2px;
-  --max-w: 1280px;
-  --gutter: clamp(1.25rem, 4vw, 3rem);
-}
-
-* {
+/* Reset + base */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 html {
+  background: #000;
+  color-scheme: dark;
   scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-
-html, body {
-  background: var(--color-void);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 body {
-  min-height: 100vh;
-  /* Subtle wireframe grid — like the cybernetic city floor */
-  background-image:
-    linear-gradient(rgba(0, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: -1px -1px;
+  background: #000;
+  color: #d8e9f5;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -71,242 +30,249 @@ a {
 }
 
 button {
-  font-family: inherit;
-  cursor: pointer;
-  background: none;
-  border: none;
+  font: inherit;
   color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
-img, video, canvas {
+img, video, svg {
   display: block;
   max-width: 100%;
+  height: auto;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-transform: uppercase;
 }
 
 ::selection {
-  background: var(--color-cyan);
-  color: var(--color-void);
+  background: #00ffff;
+  color: #000;
 }
 
-/* Layout */
+/* Brand color tokens */
+:root {
+  --color-cyan: #00ffff;
+  --color-cyan-soft: #00ffff40;
+  --color-cyan-glow: #00ffff80;
+  --color-bright: #1fa2ff;
+  --color-bright-soft: #1fa2ff40;
+  --color-bg: #000;
+  --color-text: #d8e9f5;
+  --color-text-dim: #6a7a8a;
+  --color-line: #1a2530;
+  --color-line-bright: #2a3a4a;
+
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+
+  --container-max: 1320px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #1a2530; }
+::-webkit-scrollbar-thumb:hover { background: #00ffff40; }
+
+/* Shared utilities */
 .container {
   width: 100%;
-  max-width: var(--max-w);
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--gutter);
-  position: relative;
+  padding: 0 2rem;
 }
 
-.section {
-  position: relative;
-  padding: clamp(5rem, 12vw, 10rem) 0;
+@media (max-width: 640px) {
+  .container { padding: 0 1.25rem; }
 }
 
-/* Hairline divider — wireframe rule */
-.section::before {
-  content: '';
+.cyan {
+  color: var(--color-cyan);
+}
+.dim {
+  color: var(--color-text-dim);
+}
+
+/* Site frame — the entire page lives inside a 100vh viewport that the
+   scroll-bound video fills, content scrolls over it */
+.site {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* The video element stays in the back, always playing a frame matched
+   to scroll position. */
+.video-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-stage video {
   position: absolute;
-  top: 0;
-  left: var(--gutter);
-  right: var(--gutter);
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--color-cyan) 20%,
-    var(--color-cyan) 80%,
-    transparent
-  );
-  opacity: 0.4;
-}
-
-/* Eyebrow — terminal-style metadata */
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--color-cyan);
-  margin-bottom: 1.25rem;
-}
-
-.eyebrow::before {
-  content: '> ';
-  color: var(--color-cyan);
-  font-weight: 500;
-}
-
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-  text-transform: uppercase;
-  color: var(--color-text);
-}
-
-h1 { font-size: clamp(2.8rem, 9vw, 7.5rem); }
-h2 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
-h3 {
-  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
-  text-transform: none;
-  letter-spacing: -0.02em;
-  font-weight: 600;
-  font-family: var(--font-body);
-}
-
-p {
-  color: var(--color-text-muted);
-  max-width: 60ch;
-  font-size: 0.98rem;
-}
-
-.muted { color: var(--color-text-muted); }
-
-/* Cyan glow effect */
-.cyan-glow {
-  text-shadow:
-    0 0 8px var(--color-cyan-glow),
-    0 0 24px rgba(0, 255, 255, 0.15);
-}
-
-/* Inline accent (no rounded — square brackets) */
-.cyan-bracket {
-  color: var(--color-cyan);
-  font-family: var(--font-mono);
-}
-
-/* Buttons — wireframe / outline, no rounded pills */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.95rem 1.6rem;
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease,
-    border-color 0.18s ease;
-  border: 1px solid transparent;
-  position: relative;
-  white-space: nowrap;
-}
-
-.btn-primary {
-  background: var(--color-cyan);
-  color: var(--color-void);
-  box-shadow:
-    0 0 0 0 var(--color-cyan-glow),
-    inset 0 0 0 1px var(--color-cyan);
-}
-
-.btn-primary:hover {
-  background: var(--color-void);
-  color: var(--color-cyan);
-  box-shadow:
-    0 0 24px var(--color-cyan-glow),
-    inset 0 0 0 1px var(--color-cyan);
-}
-
-.btn-ghost {
-  border-color: var(--color-cyan-dim);
-  color: var(--color-cyan);
-  background: transparent;
-}
-
-.btn-ghost:hover {
-  background: var(--color-cyan-soft);
-  border-color: var(--color-cyan);
-  box-shadow: 0 0 16px var(--color-cyan-soft);
-}
-
-/* Wireframe card — sharp corners, hairline border, no fill */
-.frame {
-  position: relative;
-  border: 1px solid var(--color-border);
-  background: rgba(10, 25, 47, 0.35);
-  padding: 1.75rem;
-  transition: border-color 0.2s ease, background 0.2s ease,
-    box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.frame:hover {
-  border-color: var(--color-cyan);
-  background: rgba(0, 255, 255, 0.04);
-  box-shadow:
-    0 0 0 1px var(--color-cyan-soft),
-    0 0 32px -8px var(--color-cyan-glow);
-  transform: translateY(-2px);
-}
-
-/* Corner brackets — like HUD targeting reticles */
-.frame::before,
-.frame::after {
-  content: '';
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border-color: var(--color-cyan);
-  border-style: solid;
-  border-width: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  width: 100vw;
+  height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7) contrast(1.15) brightness(0.6) hue-rotate(180deg);
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 1.2s ease;
 }
 
-.frame::before {
-  top: -1px;
-  left: -1px;
-  border-top-width: 1px;
-  border-left-width: 1px;
-}
-
-.frame::after {
-  bottom: -1px;
-  right: -1px;
-  border-bottom-width: 1px;
-  border-right-width: 1px;
-}
-
-.frame:hover::before,
-.frame:hover::after {
+.video-stage video[data-ready='true'] {
   opacity: 1;
 }
 
-/* Utility */
-.gradient-text {
-  background: linear-gradient(120deg, var(--color-cyan) 0%, #b6f9f9 50%, var(--color-cyan-bright) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.4));
-}
-
-/* Subtle global scanlines — cinematic-grade */
-body::after {
+/* Heavy darken over the video so content reads against it */
+.video-stage::after {
   content: '';
-  position: fixed;
+  position: absolute;
   inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 3px,
-    transparent 4px
-  );
-  z-index: 100;
-  mix-blend-mode: multiply;
+  background:
+    radial-gradient(ellipse 80% 60% at center, transparent 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.95) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.7) 100%);
+  z-index: 1;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
-  }
-  body::after { display: none; }
+/* Scanlines + grain on top of video */
+.video-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 255, 255, 0.03) 0px,
+      rgba(0, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    radial-gradient(circle at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Sections */
+.section {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 6rem 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--color-cyan);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.eyebrow::before {
+  content: '//';
+  position: absolute;
+  left: 0;
+  color: var(--color-cyan);
+  opacity: 0.7;
+}
+
+.h1 {
+  font-size: clamp(2.5rem, 7vw, 6.5rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  margin-bottom: 2rem;
+}
+
+.h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+}
+
+.lead {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  color: var(--color-text);
+  max-width: 60ch;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+.lead .prompt {
+  color: var(--color-cyan);
+  margin-right: 0.5rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.4rem;
+  border: 1px solid var(--color-cyan);
+  color: var(--color-cyan);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  background: rgba(0, 255, 255, 0.04);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.btn:hover {
+  background: var(--color-cyan);
+  color: #000;
+  box-shadow: 0 0 24px var(--color-cyan-soft);
+}
+
+.btn .arrow {
+  transition: transform 0.2s ease;
+}
+
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+.btn--ghost {
+  border-color: var(--color-line-bright);
+  color: var(--color-text);
+  background: transparent;
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-cyan);
+  color: var(--color-cyan);
+  background: transparent;
+  box-shadow: 0 0 16px var(--color-cyan-soft);
+}
+
+/* Bracket utilities */
+.bk {
+  color: var(--color-cyan);
+  opacity: 0.8;
 }

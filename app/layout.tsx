@@ -2,23 +2,31 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Bold And Digital — Scroll-Driven Visual Storytelling',
+  title: 'Bold And Digital — Visual Storytelling Studio',
   description:
-    'We design, build and ship scroll-driven 3D websites, AI automations, brand imagery and high-performance hosting for the next generation of digital-first companies.',
-  metadataBase: new URL('https://boldandigital.com'),
-  openGraph: {
-    title: 'Bold And Digital',
-    description:
-      'Scroll-driven 3D web, AI automations, and high-performance hosting for ambitious brands.',
-    type: 'website',
-    images: [{ url: '/icon-512.png', width: 512, height: 512, alt: 'Bold And Digital' }],
-  },
+    'A design and engineering studio for brands shaping tomorrow. We fuse three-dimensional web, AI automation and razor-sharp brand strategy into one shipping crew.',
+  metadataBase: new URL('https://boldandigital-visual-storytelling-v.vercel.app'),
+  applicationName: 'Bold And Digital',
+  authors: [{ name: 'Bold And Digital' }],
   icons: {
     icon: [
       { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon-16.png', sizes: '16x16', type: 'image/png' },
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
+  openGraph: {
+    type: 'website',
+    title: 'Bold And Digital — Visual Storytelling Studio',
+    description:
+      'Three-dimensional web, AI automation, brand strategy. For the bold.',
+    images: [{ url: '/icon-512.png', width: 512, height: 512, alt: 'Bold And Digital' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bold And Digital — Visual Storytelling Studio',
+    description: 'Three-dimensional web, AI automation, brand strategy. For the bold.',
+    images: ['/icon-512.png'],
   },
   manifest: '/manifest.json',
 };
@@ -36,21 +44,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-        />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        />
-      </head>
       <body>{children}</body>
     </html>
   );

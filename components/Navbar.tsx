@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import styles from './Navbar.module.css';
 
 const links = [
@@ -13,70 +12,57 @@ const links = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 80);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? window.scrollY / max : 0;
+      setProgress(Math.max(0, Math.min(1, p)));
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-      <div className={`container ${styles.row}`}>
-        <Link href="/" className={styles.brand} aria-label="Bold And Digital home">
-          <span className={styles.brandMark} aria-hidden="true">
-            <span className={styles.brandMarkInner} />
-            <span className={styles.brandMarkB}>B</span>
-            <span className={styles.brandMarkD}>D</span>
+    <header className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
+      <div className={`container ${styles.inner}`}>
+        <a href="#top" className={styles.brand} aria-label="Bold And Digital home">
+          <span className={styles.mark} aria-hidden="true">
+            <span className={styles.markB}>B</span>
+            <span className={styles.markPlus}>+</span>
+            <span className={styles.markD}>D</span>
           </span>
           <span className={styles.brandText}>
-            <span className="cyan-bracket">[</span>
+            <span className="bk">[</span>
             BOLD_AND_DIGITAL
-            <span className="cyan-bracket">]</span>
+            <span className="bk">]</span>
           </span>
-        </Link>
+        </a>
 
-        <nav
-          className={`${styles.nav} ${open ? styles.navOpen : ''}`}
-          aria-label="Primary"
-        >
+        <nav className={styles.links} aria-label="Primary">
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className={styles.navLink}
-            >
+            <a key={l.href} href={l.href} className={styles.link}>
+              <span className={styles.linkArrow}>→</span>
               {l.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            className="btn btn-primary"
-            onClick={() => setOpen(false)}
-          >
-            <span className="cyan-bracket">$</span> init
-          </a>
         </nav>
 
-        <button
-          className={styles.burger}
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          onClick={() => setOpen((o) => !o)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className={styles.status}>
+          <span className={styles.dot} />
+          <span className={styles.statusText}>
+            {Math.round(progress * 100).toString().padStart(2, '0')}%
+          </span>
+        </div>
       </div>
-
-      <div className={styles.filePath} aria-hidden="true">
-        <span>~/boldandigital/visual-storytelling-v2</span>
-        <span className={styles.cursor}>█</span>
-      </div>
+      <div
+        className={styles.progressBar}
+        style={{ transform: `scaleX(${progress})` }}
+        aria-hidden="true"
+      />
     </header>
   );
 }

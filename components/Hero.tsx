@@ -4,99 +4,78 @@ import { useEffect, useState } from 'react';
 import styles from './Hero.module.css';
 
 export default function Hero() {
-  const [mounted, setMounted] = useState(false);
-  const [time, setTime] = useState('');
+  const [now, setNow] = useState('');
 
   useEffect(() => {
-    setMounted(true);
     const tick = () => {
       const d = new Date();
-      const hh = String(d.getUTCHours()).padStart(2, '0');
-      const mm = String(d.getUTCMinutes()).padStart(2, '0');
-      const ss = String(d.getUTCSeconds()).padStart(2, '0');
-      setTime(`${hh}:${mm}:${ss} UTC`);
+      setNow(
+        d.toISOString().slice(11, 19) + ' UTC'
+      );
     };
     tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
+    const i = setInterval(tick, 1000);
+    return () => clearInterval(i);
   }, []);
 
   return (
-    <section className={styles.hero}>
-      <div className={`container ${styles.inner}`}>
-        {/* Top status row — terminal-style */}
-        <div className={styles.statusRow} data-mounted={mounted}>
-          <div className={styles.statusItem}>
-            <span className={styles.statusDot} />
-            <span>SYS:ONLINE</span>
-          </div>
-          <div className={styles.statusItem}>
-            <span>LAT:12ms</span>
-          </div>
-          <div className={styles.statusItem}>
-            <span>REG:EU-WEST</span>
-          </div>
-          <div className={styles.statusItem}>
-            <span>{time || '00:00:00 UTC'}</span>
-          </div>
-        </div>
+    <section id="top" className={styles.hero}>
+      {/* Vertical cyan beams — abstraction of the abyss looking up */}
+      <div className={styles.beams} aria-hidden="true">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className={styles.beam} style={{ animationDelay: `${i * 0.3}s` }} />
+        ))}
+      </div>
 
-        {/* Eyebrow */}
-        <div className={styles.eyebrow} data-mounted={mounted}>
-          <span className="eyebrow">
-            <span className="cyan-bracket">[</span>
-            visual_storytelling_studio
-            <span className="cyan-bracket">]</span>
-            <span className={styles.divider}>//</span>
-            est. 2022
-          </span>
-        </div>
+      {/* Top status bar */}
+      <div className={`container ${styles.statusBar}`}>
+        <span className={styles.statusItem}>
+          <span className={styles.statusKey}>SYS</span>
+          <span className={styles.statusVal}>ONLINE</span>
+        </span>
+        <span className={styles.statusItem}>
+          <span className={styles.statusKey}>LAT</span>
+          <span className={styles.statusVal}>12MS</span>
+        </span>
+        <span className={styles.statusItem}>
+          <span className={styles.statusKey}>REG</span>
+          <span className={styles.statusVal}>EU-WEST</span>
+        </span>
+        <span className={styles.statusItem}>
+          <span className={styles.statusKey}>T</span>
+          <span className={styles.statusVal}>{now}</span>
+        </span>
+      </div>
 
-        {/* Title — monospace, ALL CAPS, cyan glow */}
-        <h1 className={styles.title} data-mounted={mounted}>
-          We build
-          <br />
-          <span className={`gradient-text ${styles.titleAccent}`}>
-            scroll-driven
-          </span>
-          <br />
-          digital worlds.
+      <div className={`container ${styles.body}`}>
+        <span className={styles.eyebrow}>
+          <span className="bk">{'>'}</span> ./initialize_studio --brand=boldandigital
+        </span>
+
+        <h1 className={styles.h1}>
+          <span className={styles.line}>WE BUILD</span>
+          <span className={`${styles.line} ${styles.lineAccent}`}>SCROLL-DRIVEN</span>
+          <span className={styles.line}>DIGITAL WORLDS.</span>
         </h1>
 
-        {/* Lede */}
-        <p className={styles.lede} data-mounted={mounted}>
-          <span className="cyan-bracket">&gt; </span>
-          Bold And Digital is a design and engineering studio for brands
-          shaping tomorrow. We fuse three-dimensional web, AI automation and
-          razor-sharp brand strategy into one shipping crew.
+        <p className={styles.lead}>
+          <span className="bk">{'>'}</span> Bold And Digital is a design and engineering studio for brands shaping tomorrow. We fuse three-dimensional web, AI automation and razor-sharp brand strategy into one shipping crew.
         </p>
 
-        {/* CTAs */}
-        <div className={styles.actions} data-mounted={mounted}>
-          <a href="#contact" className="btn btn-primary">
-            initialize_project
-            <span aria-hidden="true">→</span>
+        <div className={styles.cta}>
+          <a href="#contact" className="btn">
+            INITIALIZE_PROJECT <span className="arrow">→</span>
           </a>
-          <a href="#work" className="btn btn-ghost">
-            see_the_work
+          <a href="#work" className="btn btn--ghost">
+            SEE_THE_WORK <span className="arrow">→</span>
           </a>
         </div>
+      </div>
 
-        {/* Bottom corner: scroll cue */}
-        <div className={styles.scrollCue} aria-hidden="true">
-          <div className={styles.scrollLabel}>SCROLL</div>
-          <div className={styles.scrollLine} />
-          <div className={styles.scrollMeta}>
-            <span>00:00.00</span>
-            <span> / </span>
-            <span>16.20s</span>
-          </div>
-        </div>
-
-        {/* Right corner: target reticle */}
-        <div className={styles.reticle} aria-hidden="true">
-          <div className={styles.reticleBracket} />
-        </div>
+      {/* Scroll indicator */}
+      <div className={styles.scrollHint} aria-hidden="true">
+        <div className={styles.scrollLine} />
+        <span>SCROLL</span>
       </div>
     </section>
   );

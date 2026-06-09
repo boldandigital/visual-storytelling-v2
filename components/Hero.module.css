@@ -1,209 +1,173 @@
 .hero {
   position: relative;
-  z-index: 2;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  padding-top: 7rem;
-  padding-bottom: 4rem;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6rem 0 4rem;
+  overflow: hidden;
 }
 
-.inner {
-  position: relative;
+/* Vertical cyan beams from top — abstraction of "looking up into the abyss" */
+.beams {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  perspective: 800px;
 }
 
-/* Fade-in animation system */
-.statusRow,
-.eyebrow,
-.title,
-.lede,
-.actions,
-.scrollCue,
-.reticle {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.9s cubic-bezier(0.2, 0.65, 0.2, 1),
-    transform 0.9s cubic-bezier(0.2, 0.65, 0.2, 1);
+.beam {
+  position: absolute;
+  top: -10%;
+  width: 1px;
+  height: 70%;
+  background: linear-gradient(180deg, var(--color-cyan) 0%, transparent 100%);
+  transform-origin: top center;
+  transform: rotateX(70deg);
+  opacity: 0.5;
+  animation: beamFlicker 4s ease-in-out infinite;
+  filter: blur(0.3px);
+  box-shadow: 0 0 8px var(--color-cyan-glow);
 }
 
-.hero :global([data-mounted='true']).statusRow,
-.hero :global([data-mounted='true']).eyebrow,
-.hero :global([data-mounted='true']).title,
-.hero :global([data-mounted='true']).lede,
-.hero :global([data-mounted='true']).actions,
-.hero :global([data-mounted='true']).scrollCue,
-.hero :global([data-mounted='true']).reticle {
-  opacity: 1;
-  transform: none;
+.beam:nth-child(odd) { opacity: 0.7; }
+.beam:nth-child(even) { opacity: 0.3; height: 60%; }
+
+@keyframes beamFlicker {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.85; }
 }
 
-/* Top status row */
-.statusRow {
+.beam:nth-child(1) { left: 5%; }
+.beam:nth-child(2) { left: 15%; }
+.beam:nth-child(3) { left: 25%; }
+.beam:nth-child(4) { left: 38%; }
+.beam:nth-child(5) { left: 50%; }
+.beam:nth-child(6) { left: 62%; }
+.beam:nth-child(7) { left: 75%; }
+.beam:nth-child(8) { left: 88%; }
+
+/* Status bar at top */
+.statusBar {
   display: flex;
   gap: 2rem;
-  flex-wrap: wrap;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-cyan);
-  margin-bottom: 3rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--color-border-dim);
-  transition-delay: 0ms;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-dim);
+  padding-top: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .statusItem {
   display: inline-flex;
-  align-items: center;
   gap: 0.5rem;
 }
 
-.statusDot {
-  width: 6px;
-  height: 6px;
-  background: var(--color-cyan);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--color-cyan);
-  animation: pulse 1.6s ease-in-out infinite;
+.statusKey {
+  color: var(--color-text-dim);
 }
 
-@keyframes pulse {
+.statusVal {
+  color: var(--color-cyan);
+}
+
+/* Body */
+.body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2rem;
+  max-width: 1320px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: var(--color-cyan);
+  margin-bottom: 2rem;
+  text-transform: lowercase;
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
 
-/* Eyebrow */
-.eyebrow {
-  margin-bottom: 2rem;
-  transition-delay: 120ms;
-}
-
-.eyebrow .divider {
-  margin: 0 0.5rem;
-  color: var(--color-text-dim);
-}
-
-/* Title */
-.title {
-  font-family: var(--font-display);
+.h1 {
+  font-size: clamp(2.8rem, 8.5vw, 7.5rem);
   font-weight: 500;
-  font-size: clamp(3rem, 10vw, 8.5rem);
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-  transition-delay: 240ms;
-  max-width: 14ch;
-}
-
-.titleAccent {
-  font-style: normal;
-}
-
-/* Lede */
-.lede {
-  font-family: var(--font-body);
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
-  max-width: 56ch;
+  letter-spacing: -0.015em;
+  line-height: 0.92;
   margin-bottom: 2.5rem;
-  transition-delay: 360ms;
-  color: var(--color-text-muted);
-  line-height: 1.6;
-}
-
-/* CTAs */
-.actions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  transition-delay: 480ms;
-}
-
-/* Scroll cue (bottom-left) */
-.scrollCue {
-  position: absolute;
-  bottom: -3rem;
-  left: 0;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-cyan);
-  transition-delay: 600ms;
 }
 
-.scrollLabel {
-  opacity: 0.7;
+.line {
+  display: block;
+}
+
+.lineAccent {
+  color: var(--color-cyan);
+  text-shadow: 0 0 32px var(--color-cyan-soft), 0 0 64px rgba(0, 255, 255, 0.3);
+  position: relative;
+}
+
+.lineAccent::before,
+.lineAccent::after {
+  content: '_';
+  display: inline-block;
+  margin: 0 0.2em;
+  color: var(--color-cyan);
+  opacity: 0.4;
+}
+
+.lead {
+  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+  color: var(--color-text);
+  max-width: 58ch;
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.02em;
+}
+
+.cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Scroll hint */
+.scrollHint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--color-text-dim);
+  margin: 0 auto;
+  padding-top: 2rem;
 }
 
 .scrollLine {
-  width: 60px;
-  height: 1px;
-  background: var(--color-cyan);
-  position: relative;
-  overflow: hidden;
-}
-
-.scrollLine::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -30px;
-  width: 30px;
-  height: 1px;
-  background: var(--color-void);
-  animation: scrollSweep 2.4s ease-in-out infinite;
-}
-
-@keyframes scrollSweep {
-  0% { left: -30px; }
-  100% { left: 60px; }
-}
-
-.scrollMeta {
-  color: var(--color-text-dim);
-  font-size: 0.65rem;
-}
-
-/* Reticle (top-right HUD element) */
-.reticle {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 80px;
-  height: 80px;
-  transition-delay: 100ms;
-}
-
-.reticleBracket {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 24px;
-  height: 24px;
-  border-top: 1px solid var(--color-cyan);
-  border-right: 1px solid var(--color-cyan);
-  box-shadow: 0 0 12px var(--color-cyan-soft);
-}
-
-.reticleBracket::before {
-  content: '';
-  position: absolute;
-  bottom: -40px;
-  left: 0;
   width: 1px;
-  height: 32px;
-  background: var(--color-cyan);
-  opacity: 0.5;
+  height: 40px;
+  background: linear-gradient(180deg, transparent, var(--color-cyan));
+  animation: scrollPulse 2s ease-in-out infinite;
 }
 
-@media (max-width: 768px) {
-  .statusRow { gap: 1rem; font-size: 0.65rem; }
-  .reticle { display: none; }
-  .scrollCue { bottom: -1rem; }
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.3; }
+  50% { transform: scaleY(1); opacity: 1; }
 }

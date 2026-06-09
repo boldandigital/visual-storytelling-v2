@@ -3,72 +3,69 @@ import styles from './Work.module.css';
 
 const projects = [
   {
-    name: 'LiteSpeed',
-    tag: 'performance_infrastructure',
-    desc:
-      'Brand refresh and scroll-driven product storytelling for the team behind the fastest web server on the planet.',
     year: '2025',
+    cat: 'performance_infrastructure',
+    client: 'LiteSpeed',
+    desc: 'Brand refresh and scroll-driven product storytelling for the team behind the fastest web server on the planet.',
   },
   {
-    name: 'QUIC.cloud',
-    tag: 'edge_cdn',
-    desc:
-      'Developer-first product site with interactive latency demos and conversion-focused content ops.',
     year: '2025',
+    cat: 'edge_cdn',
+    client: 'QUIC.cloud',
+    desc: 'Developer-first product site with interactive latency demos and conversion-focused content ops.',
   },
   {
-    name: 'aaads',
-    tag: 'ai_automation',
-    desc:
-      'Custom GPT agents and a closed-loop RAG system that cut campaign turnaround from days to hours.',
     year: '2024',
+    cat: 'ai_automation',
+    client: 'AAADS',
+    desc: 'Custom GPT agents and a closed-loop RAG system that cut campaign turnaround from days to hours.',
+  },
+  {
+    year: '2024',
+    cat: 'generative_imagery',
+    client: 'Atlas Studio',
+    desc: 'Generative photo + motion pipeline for an editorial brand — zero shoots, full campaign in 14 days.',
   },
 ];
 
 export default function Work() {
   return (
-    <section id="work" className={`section ${styles.wrap}`}>
+    <section id="work" className={`section ${styles.section}`}>
       <div className="container">
         <Reveal>
           <span className="eyebrow">// selected_work.log</span>
         </Reveal>
         <Reveal delay={80}>
-          <h2>
-            We build with
+          <h2 className="h2">
+            WE BUILD WITH
             <br />
-            <span className="gradient-text">the bold</span>
-            <span className="cyan-bracket">.</span>
+            THE BOLD.
           </h2>
         </Reveal>
         <Reveal delay={140}>
-          <p className={styles.intro}>
-            A small sample of teams that trust us to ship the impossible.
+          <p className="lead" style={{ marginBottom: '4rem' }}>
+            <span className="prompt">{'>'}</span> A small sample of teams that trust us to ship the impossible.
           </p>
         </Reveal>
 
-        <ul className={styles.list}>
-          {projects.map((p, i) => (
-            <Reveal as="li" key={p.name} delay={i * 90}>
-              <a className={`frame ${styles.row}`} href="#contact">
-                <div className={styles.left}>
-                  <div className={styles.metaRow}>
-                    <span className={styles.tag}>{p.tag}</span>
-                    <span className={styles.year}>// {p.year}</span>
-                  </div>
-                  <h3 className={styles.name}>{p.name}</h3>
-                  <p className={styles.desc}>{p.desc}</p>
-                </div>
-                <div className={styles.right}>
-                  <div className={styles.arrow} aria-hidden="true">
-                    <span className="cyan-bracket">[</span>
-                    <span className={styles.arrowText}>EXECUTE</span>
-                    <span className="cyan-bracket">]</span>
-                  </div>
-                </div>
-              </a>
-            </Reveal>
-          ))}
-        </ul>
+        <Reveal delay={200}>
+          <ul className={styles.log}>
+            {projects.map((p, i) => (
+              <li key={p.client} className={styles.row}>
+                <span className={styles.idx}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className={styles.cat}>{p.cat}</span>
+                <span className={styles.year}>{p.year}</span>
+                <span className={styles.client}>{p.client}</span>
+                <span className={styles.desc}>{p.desc}</span>
+                <a className={styles.exec} href="#contact">
+                  <span className="bk">[</span>EXECUTE<span className="bk">]</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );
