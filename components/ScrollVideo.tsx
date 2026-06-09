@@ -5,16 +5,19 @@ import styles from './ScrollVideo.module.css';
 
 /**
  * Fixed full-viewport scroll-bound video background.
- * - Plays continuously on autoplay
- * - currentTime is bound to scroll progress across the document
- * - Falls back to a static gradient if the video can't load
- * - Pauses + seeks smoothly using requestAnimationFrame
- * - Reduced-motion users get the static gradient only
+ * - currentTime bound to document scroll progress (snaps only when delta > 0.05s)
+ * - Cinematic post-fx: chromatic aberration, scanlines, vignette
+ * - Subtle film grain
+ * - Falls back to a black void + wireframe grid if video can't load
+ * - Respects prefers-reduced-motion
  */
 export default function ScrollVideo() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const grainRef = useRef<HTMLDivElement | null>(null);
+  const vignetteRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
   const readyRef = useRef(false);
+  const progressRef = useRef(0);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -28,7 +31,6 @@ export default function ScrollVideo() {
 
     const onReady = () => {
       readyRef.current = true;
-      // Bind to current scroll position on first paint.
       syncToScroll();
     };
 
@@ -36,8 +38,8 @@ export default function ScrollVideo() {
       if (!readyRef.current || !video.duration || !isFinite(video.duration)) return;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const progress = max > 0 ? window.scrollY / max : 0;
+      progressRef.current = progress;
       const target = Math.max(0, Math.min(video.duration - 0.05, progress * video.duration));
-      // Snap only when meaningfully off (>0.05s) to avoid jank
       if (Math.abs(video.currentTime - target) > 0.05) {
         video.currentTime = target;
       }
@@ -51,15 +53,36 @@ export default function ScrollVideo() {
       });
     };
 
+    const animateFx = () => {
+      rafRef.current = requestAnimationFrame(animateFx);
+      const p = progressRef.current;
+
+      // Chromatic aberration intensifies as you scroll deeper
+      if (vignetteRef.current) {
+        const intensity = 1 + p * 2.5;
+        vignetteRef.current.style.setProperty(
+          '--chroma',
+          String(intensity.toFixed(2))
+        );
+      }
+
+      // Subtle film grain rotation
+      if (grainRef.current) {
+        grainRef.current.style.transform = `translate(${(Math.random() - 0.5) * 2}px, ${(Math.random() - 0.5) * 2}px)`;
+        grainRef.current.style.opacity = String(0.07 + Math.random() * 0.03);
+      }
+    };
+
     video.addEventListener('loadedmetadata', onReady);
     video.addEventListener('canplay', onReady);
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
 
-    // Try to autoplay (muted). If blocked, the poster/gradient will show.
     video.play().catch(() => {
-      /* autoplay blocked - gradient fallback is fine */
+      /* autoplay blocked */
     });
+
+    animateFx();
 
     return () => {
       video.removeEventListener('loadedmetadata', onReady);
@@ -73,7 +96,6 @@ export default function ScrollVideo() {
 
   return (
     <div className={styles.wrap} aria-hidden="true">
-      <div className={styles.gradient} />
       <video
         ref={videoRef}
         className={styles.video}
@@ -82,12 +104,38 @@ export default function ScrollVideo() {
         playsInline
         loop={false}
         preload="auto"
-        // Disable native controls and right-click menu
         controls={false}
         onContextMenu={(e) => e.preventDefault()}
       />
-      <div className={styles.overlay} />
-      <div className={styles.vignette} />
+
+      {/* Chromatic aberration — RGB-split copies of the video */}
+      <div className={styles.chroma} style={{ filter: 'url(#chromaRgb)' }} />
+      <div className={styles.chromaR} />
+      <div className={styles.chromaB} />
+
+      {/* Cinematic scanlines */}
+      <div className={styles.scanlines} />
+
+      {/* Film grain */}
+      <div ref={grainRef} className={styles.grain} />
+
+      {/* Vignette + edge fade */}
+      <div ref={vignetteRef} className={styles.vignette} />
+
+      {/* SVG filter for the chromatic aberration */}
+      <svg className={styles.svgFilters} aria-hidden="true">
+        <defs>
+          <filter id="chromaRgb">
+            <feColorMatrix
+              type="matrix"
+              values="1 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 1 0"
+            />
+          </filter>
+        </defs>
+      </svg>
     </div>
   );
 }

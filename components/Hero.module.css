@@ -4,75 +4,206 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: 6rem;
+  padding-top: 7rem;
   padding-bottom: 4rem;
 }
 
 .inner {
   position: relative;
+  width: 100%;
 }
 
+/* Fade-in animation system */
+.statusRow,
 .eyebrow,
 .title,
 .lede,
-.actions {
+.actions,
+.scrollCue,
+.reticle {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.9s cubic-bezier(0.2, 0.65, 0.2, 1),
     transform 0.9s cubic-bezier(0.2, 0.65, 0.2, 1);
 }
 
+.hero :global([data-mounted='true']).statusRow,
 .hero :global([data-mounted='true']).eyebrow,
 .hero :global([data-mounted='true']).title,
 .hero :global([data-mounted='true']).lede,
-.hero :global([data-mounted='true']).actions {
+.hero :global([data-mounted='true']).actions,
+.hero :global([data-mounted='true']).scrollCue,
+.hero :global([data-mounted='true']).reticle {
   opacity: 1;
   transform: none;
 }
 
-.title {
-  transition-delay: 120ms;
-  max-width: 18ch;
-  margin-bottom: 1.25rem;
-}
-
-.title em {
-  font-style: italic;
+/* Top status row */
+.statusRow {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--color-cyan);
+  margin-bottom: 3rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border-dim);
+  transition-delay: 0ms;
+}
+
+.statusItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-cyan);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Eyebrow */
+.eyebrow {
+  margin-bottom: 2rem;
+  transition-delay: 120ms;
+}
+
+.eyebrow .divider {
+  margin: 0 0.5rem;
+  color: var(--color-text-dim);
+}
+
+/* Title */
+.title {
+  font-family: var(--font-display);
   font-weight: 500;
-}
-
-.lede {
+  font-size: clamp(3rem, 10vw, 8.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
   transition-delay: 240ms;
-  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-  max-width: 52ch;
-  margin-bottom: 2.25rem;
+  max-width: 14ch;
 }
 
-.actions {
+.titleAccent {
+  font-style: normal;
+}
+
+/* Lede */
+.lede {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  max-width: 56ch;
+  margin-bottom: 2.5rem;
   transition-delay: 360ms;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* CTAs */
+.actions {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  transition-delay: 480ms;
 }
 
-.scrollHint {
+/* Scroll cue (bottom-left) */
+.scrollCue {
   position: absolute;
   bottom: -3rem;
-  left: var(--gutter);
+  left: 0;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1rem;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
+  color: var(--color-cyan);
+  transition-delay: 600ms;
 }
 
-.line {
-  width: 40px;
+.scrollLabel {
+  opacity: 0.7;
+}
+
+.scrollLine {
+  width: 60px;
   height: 1px;
   background: var(--color-cyan);
-  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollLine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -30px;
+  width: 30px;
+  height: 1px;
+  background: var(--color-void);
+  animation: scrollSweep 2.4s ease-in-out infinite;
+}
+
+@keyframes scrollSweep {
+  0% { left: -30px; }
+  100% { left: 60px; }
+}
+
+.scrollMeta {
+  color: var(--color-text-dim);
+  font-size: 0.65rem;
+}
+
+/* Reticle (top-right HUD element) */
+.reticle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  transition-delay: 100ms;
+}
+
+.reticleBracket {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  border-top: 1px solid var(--color-cyan);
+  border-right: 1px solid var(--color-cyan);
+  box-shadow: 0 0 12px var(--color-cyan-soft);
+}
+
+.reticleBracket::before {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  width: 1px;
+  height: 32px;
+  background: var(--color-cyan);
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .statusRow { gap: 1rem; font-size: 0.65rem; }
+  .reticle { display: none; }
+  .scrollCue { bottom: -1rem; }
 }

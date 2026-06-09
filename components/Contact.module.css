@@ -4,15 +4,119 @@
 }
 
 .card {
-  padding: clamp(2rem, 5vw, 3.5rem);
-  text-align: left;
-  max-width: 880px;
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  max-width: 960px;
   margin: 0 auto;
+}
+
+.terminalHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dots span {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--color-cyan-dim);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminalPath {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+}
+
+.content {
+  padding: clamp(2rem, 4vw, 3rem);
+}
+
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+}
+
+.cmd {
+  color: var(--color-cyan);
+}
+
+.cursor {
+  color: var(--color-cyan);
+  animation: blink 1s steps(2, end) infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.copy {
+  margin: 1.25rem 0 2rem;
+  max-width: 56ch;
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem;
+  margin: 1.5rem 0 2.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border-dim);
+  background: rgba(0, 0, 0, 0.3);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.statusLine {
+  display: grid;
+  grid-template-columns: 130px 16px 1fr;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.statusKey {
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+}
+
+.statusSep {
+  color: var(--color-cyan);
+}
+
+.statusVal {
+  color: var(--color-cyan);
+  text-shadow: 0 0 6px var(--color-cyan-soft);
 }
 
 .actions {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
-  margin-top: 1.75rem;
+}
+
+@media (max-width: 600px) {
+  .statusLine {
+    grid-template-columns: 100px 16px 1fr;
+  }
 }

@@ -1,26 +1,35 @@
-/* Bold And Digital — Global Styles
-   Brand: #051E40 deep navy, #29F2F2 electric cyan */
+/* Bold And Digital v2 — Rebuilt to match scroll-bg.mp4
+   Pitch black void · Electric cyan emissives · Wireframe grid · Mono-tech type */
 
 :root {
-  --color-navy: #051E40;
-  --color-navy-deep: #020F23;
-  --color-cyan: #29F2F2;
-  --color-cyan-soft: rgba(41, 242, 242, 0.12);
-  --color-text: #F5F9FF;
-  --color-text-muted: rgba(245, 249, 255, 0.72);
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-glass: rgba(5, 30, 64, 0.55);
-  --color-glass-strong: rgba(5, 30, 64, 0.85);
+  /* Pure dark palette — derived from the video */
+  --color-void: #000000;
+  --color-void-soft: #050a14;
+  --color-navy-deep: #0a192f;
+  --color-navy: #0a192f;
 
-  --font-display: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+  /* Electric cyan emissives — dominant accents */
+  --color-cyan: #00ffff;
+  --color-cyan-bright: #1fa2ff;
+  --color-cyan-soft: rgba(0, 255, 255, 0.12);
+  --color-cyan-glow: rgba(0, 255, 255, 0.4);
+  --color-cyan-dim: rgba(0, 255, 255, 0.55);
+
+  /* Greys (cool-tinted to match the cyan) */
+  --color-text: #e8f4ff;
+  --color-text-muted: rgba(232, 244, 255, 0.6);
+  --color-text-dim: rgba(232, 244, 255, 0.4);
+  --color-border: rgba(0, 255, 255, 0.12);
+  --color-border-dim: rgba(0, 255, 255, 0.06);
+
+  /* Type — mono-led, matches terminal/wireframe aesthetic */
+  --font-display: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
-
-  --max-w: 1200px;
+  --radius: 0px; /* No rounded corners — wireframe / brutalist */
+  --radius-sm: 2px;
+  --max-w: 1280px;
   --gutter: clamp(1.25rem, 4vw, 3rem);
 }
 
@@ -36,7 +45,7 @@ html {
 }
 
 html, body {
-  background: var(--color-navy-deep);
+  background: var(--color-void);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: 16px;
@@ -48,6 +57,12 @@ html, body {
 
 body {
   min-height: 100vh;
+  /* Subtle wireframe grid — like the cybernetic city floor */
+  background-image:
+    linear-gradient(rgba(0, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: -1px -1px;
 }
 
 a {
@@ -70,7 +85,7 @@ img, video, canvas {
 
 ::selection {
   background: var(--color-cyan);
-  color: var(--color-navy);
+  color: var(--color-void);
 }
 
 /* Layout */
@@ -79,101 +94,213 @@ img, video, canvas {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--gutter);
+  position: relative;
 }
 
-/* Section frame */
 .section {
   position: relative;
-  padding: clamp(4rem, 10vw, 8rem) 0;
+  padding: clamp(5rem, 12vw, 10rem) 0;
 }
 
+/* Hairline divider — wireframe rule */
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-cyan) 20%,
+    var(--color-cyan) 80%,
+    transparent
+  );
+  opacity: 0.4;
+}
+
+/* Eyebrow — terminal-style metadata */
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   color: var(--color-cyan);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 28px;
-  height: 1px;
-  background: var(--color-cyan);
+  content: '> ';
+  color: var(--color-cyan);
+  font-weight: 500;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-text);
 }
 
-h1 { font-size: clamp(2.5rem, 7vw, 5.5rem); }
-h2 { font-size: clamp(2rem, 5vw, 3.75rem); }
-h3 { font-size: clamp(1.4rem, 2.4vw, 2rem); }
+h1 { font-size: clamp(2.8rem, 9vw, 7.5rem); }
+h2 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+h3 {
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  text-transform: none;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-family: var(--font-body);
+}
 
-p { color: var(--color-text-muted); max-width: 60ch; }
+p {
+  color: var(--color-text-muted);
+  max-width: 60ch;
+  font-size: 0.98rem;
+}
 
 .muted { color: var(--color-text-muted); }
 
-/* Button */
+/* Cyan glow effect */
+.cyan-glow {
+  text-shadow:
+    0 0 8px var(--color-cyan-glow),
+    0 0 24px rgba(0, 255, 255, 0.15);
+}
+
+/* Inline accent (no rounded — square brackets) */
+.cyan-bracket {
+  color: var(--color-cyan);
+  font-family: var(--font-mono);
+}
+
+/* Buttons — wireframe / outline, no rounded pills */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.4rem;
-  border-radius: 999px;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  font-family: var(--font-mono);
   font-weight: 500;
-  font-size: 0.95rem;
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
   border: 1px solid transparent;
+  position: relative;
   white-space: nowrap;
 }
 
 .btn-primary {
   background: var(--color-cyan);
-  color: var(--color-navy);
-  box-shadow: 0 0 0 0 var(--color-cyan-soft);
+  color: var(--color-void);
+  box-shadow:
+    0 0 0 0 var(--color-cyan-glow),
+    inset 0 0 0 1px var(--color-cyan);
 }
 
 .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 0 6px var(--color-cyan-soft);
+  background: var(--color-void);
+  color: var(--color-cyan);
+  box-shadow:
+    0 0 24px var(--color-cyan-glow),
+    inset 0 0 0 1px var(--color-cyan);
 }
 
 .btn-ghost {
-  border-color: var(--color-border);
-  background: var(--color-glass);
-  color: var(--color-text);
-  backdrop-filter: blur(10px);
+  border-color: var(--color-cyan-dim);
+  color: var(--color-cyan);
+  background: transparent;
 }
 
 .btn-ghost:hover {
+  background: var(--color-cyan-soft);
   border-color: var(--color-cyan);
-  color: var(--color-cyan);
+  box-shadow: 0 0 16px var(--color-cyan-soft);
 }
 
-/* Cards / glass */
-.glass {
-  background: var(--color-glass);
+/* Wireframe card — sharp corners, hairline border, no fill */
+.frame {
+  position: relative;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(10, 25, 47, 0.35);
+  padding: 1.75rem;
+  transition: border-color 0.2s ease, background 0.2s ease,
+    box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.frame:hover {
+  border-color: var(--color-cyan);
+  background: rgba(0, 255, 255, 0.04);
+  box-shadow:
+    0 0 0 1px var(--color-cyan-soft),
+    0 0 32px -8px var(--color-cyan-glow);
+  transform: translateY(-2px);
+}
+
+/* Corner brackets — like HUD targeting reticles */
+.frame::before,
+.frame::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--color-cyan);
+  border-style: solid;
+  border-width: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.frame::before {
+  top: -1px;
+  left: -1px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.frame::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+.frame:hover::before,
+.frame:hover::after {
+  opacity: 1;
 }
 
 /* Utility */
 .gradient-text {
-  background: linear-gradient(120deg, var(--color-cyan), #b6f9f9 60%, #fff);
+  background: linear-gradient(120deg, var(--color-cyan) 0%, #b6f9f9 50%, var(--color-cyan-bright) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.4));
+}
+
+/* Subtle global scanlines — cinematic-grade */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 3px,
+    transparent 4px
+  );
+  z-index: 100;
+  mix-blend-mode: multiply;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -181,4 +308,5 @@ p { color: var(--color-text-muted); max-width: 60ch; }
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+  body::after { display: none; }
 }

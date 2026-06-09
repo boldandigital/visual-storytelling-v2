@@ -13,25 +13,37 @@ export default function Process() {
     <section id="process" className={`section ${styles.wrap}`}>
       <div className="container">
         <Reveal>
-          <span className="eyebrow">How we work</span>
+          <span className="eyebrow">// process.run</span>
         </Reveal>
         <Reveal delay={80}>
           <h2>
-            From brief to <span className="gradient-text">shipping fast.</span>
+            From brief
+            <br />
+            <span className="gradient-text">to shipping fast</span>
+            <span className="cyan-bracket">.</span>
           </h2>
         </Reveal>
         <Reveal delay={140}>
-          <p style={{ marginTop: '1rem', marginBottom: '3rem' }}>
+          <p className={styles.intro}>
             Four phases. No retainer theatre. No endless decks.
           </p>
         </Reveal>
 
         <ol className={styles.steps}>
           {steps.map((s, i) => (
-            <Reveal as="li" key={s.n} delay={i * 90}>
-              <span className={styles.num}>{s.n}</span>
-              <h3>{s.t}</h3>
-              <p>{s.d}</p>
+            <Reveal as="li" key={s.n} delay={i * 80}>
+              <div className="frame">
+                <div className={styles.stepInner}>
+                  <div className={styles.stepHeader}>
+                    <span className={styles.num}>[{s.n}]</span>
+                    <span className={styles.arrow}>
+                      <span className="cyan-bracket">→</span>
+                    </span>
+                  </div>
+                  <h3 className={styles.title}>{s.t}</h3>
+                  <p className={styles.desc}>{s.d}</p>
+                </div>
+              </div>
             </Reveal>
           ))}
         </ol>
