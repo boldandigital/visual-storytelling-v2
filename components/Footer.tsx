@@ -5,6 +5,13 @@ const buildDate = new Date()
   .replace('T', ' ')
   .slice(0, 19) + ' UTC';
 
+// Vercel injects VERCEL_GIT_COMMIT_SHA at build time. This makes the
+// footer reflect the *exact* commit the deployed bundle was built from,
+// so we can verify the live build matches what we just pushed.
+const buildSha =
+  process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? 'dev';
+const buildShort = process.env.VERCEL ? ` · ${buildSha}` : ' · local';
+
 export default function Footer() {
   return (
     <footer className={styles.footer}>
@@ -30,7 +37,7 @@ export default function Footer() {
         <div className={styles.middle}>
           <div className={styles.statusLine}>
             <span className={styles.statusKey}>BUILD</span>
-            <span className={styles.statusVal}>v2.0.0</span>
+            <span className={styles.statusVal}>v2.0.0{buildShort}</span>
           </div>
           <div className={styles.statusLine}>
             <span className={styles.statusKey}>DEPLOYED</span>
