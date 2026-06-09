@@ -31,6 +31,7 @@ export default function ScrollVideo() {
 
     const onReady = () => {
       readyRef.current = true;
+      if (video) video.dataset.ready = 'true';
       syncToScroll();
     };
 
