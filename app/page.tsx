@@ -1,25 +1,21 @@
-import VideoStage from '@/components/VideoStage';
-import HUD from '@/components/HUD';
-import EndOfTransmission from '@/components/EndOfTransmission';
-import Scene1 from '@/components/Scene1';
-import Scene2 from '@/components/Scene2';
-import Scene3 from '@/components/Scene3';
-import Scene4 from '@/components/Scene4';
-import Scene5 from '@/components/Scene5';
+import Hero from '@/components/Hero';
+import Sections from '@/components/Sections';
+import BrandNav from '@/components/BrandNav';
+import FinePrint from '@/components/FinePrint';
 
+/**
+ * Home — Mantis-style single-viewport brand site.
+ * One hero, one quiet column. No scroll-bound 3D, no scene architecture.
+ */
 export default function HomePage() {
   return (
     <>
-      <VideoStage />
-      <HUD />
-      <EndOfTransmission />
-      <main className="scenes">
-        <section id="top" className="scene"><Scene1 /></section>
-        <section id="services" className="scene"><Scene2 /></section>
-        <section id="work" className="scene"><Scene3 /></section>
-        <section id="process" className="scene"><Scene4 /></section>
-        <section id="contact" className="scene"><Scene5 /></section>
+      <BrandNav />
+      <main className="page">
+        <Hero />
+        <Sections />
       </main>
+      <FinePrint />
     </>
   );
 }
