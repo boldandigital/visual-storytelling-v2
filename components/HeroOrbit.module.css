@@ -1,0 +1,361 @@
+/* ─────────────────────────────────────────────────────────
+   HeroOrbit — animated 3D product hero (v6)
+   Pattern: LOOP recorder (left text + right rotating 3D product)
+   ───────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 720px;
+  background: #ffffff;
+  overflow: hidden;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--navy);
+}
+
+/* Brand wordmark — top-left, vertical chunky form (BRAND.md) */
+.brandMark {
+  position: absolute;
+  top: 2rem;
+  left: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 5;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.brandNavy { color: var(--navy); }
+.brandSlash {
+  color: var(--cyan);
+  font-weight: 300;
+  transform: translateY(-0.05em);
+}
+.brandDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--cyan);
+  margin-left: 0.2rem;
+}
+
+/* Thin top nav (Loop Recorder) */
+.nav {
+  position: absolute;
+  top: 2rem;
+  right: 2.5rem;
+  display: flex;
+  gap: 1.6rem;
+  z-index: 5;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.nav a {
+  color: var(--navy);
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+.nav a:hover { opacity: 1; }
+.navCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1.2px solid var(--cyan) !important;
+  padding: 0.4rem 0.85rem;
+  color: var(--navy) !important;
+  opacity: 1 !important;
+  border-radius: 999px;
+}
+.navArrow { transition: transform 0.2s ease; }
+.navCta:hover .navArrow { transform: translateX(3px); }
+
+/* 50/50 split */
+.split {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  align-items: stretch;
+}
+
+/* LEFT — text column */
+.text {
+  position: relative;
+  z-index: 3;
+  padding: 0 3rem 0 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.eyebrowDot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: var(--cyan);
+  border-radius: 50%;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* H1 stack — 3 phrases, only one visible at a time */
+.h1Stack {
+  position: relative;
+  width: 100%;
+  height: clamp(8rem, 18vw, 16rem);
+  display: flex;
+  align-items: center;
+}
+.h1 {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  font-size: clamp(2.4rem, 5.8vw, 5.6rem);
+  line-height: 0.96;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  margin: 0;
+}
+.h1Active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.period { color: var(--cyan); }
+
+.lead {
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+  line-height: 1.55;
+  color: var(--text);
+  max-width: 38ch;
+  font-family: var(--font-mono);
+  letter-spacing: 0.01em;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  background: var(--navy);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 999px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.cta:hover {
+  background: #0a2c5c;
+  transform: translateY(-1px);
+}
+.ctaArrow { transition: transform 0.2s ease; }
+.cta:hover .ctaArrow { transform: translateX(4px); }
+
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 1.4rem;
+  color: var(--navy);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 1.2px solid rgba(5, 30, 64, 0.25);
+  transition: border-color 0.2s ease;
+}
+.ctaGhost:hover { border-color: var(--navy); }
+
+.footMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.footMetaLabel {
+  color: var(--cyan);
+  font-weight: 700;
+  margin-right: 0.4rem;
+}
+.footMetaSep { opacity: 0.4; }
+
+/* RIGHT — product area (rotating bowl) */
+.product {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 65% 50%, rgba(11, 181, 181, 0.04) 0%, transparent 55%),
+    linear-gradient(135deg, #f8fbfb 0%, #ffffff 60%, #f5f8fa 100%);
+}
+
+/* CSS-driven spin on a wrapper reinforces the orbital camera move.
+   The video inside ALSO rotates, so we get layered motion: the bowl
+   spins continuously even when the user is scrolling text states. */
+.spinWrap {
+  position: relative;
+  width: 86%;
+  aspect-ratio: 16 / 9;
+  max-width: 720px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Slow continuous spin — 24s for a full revolution */
+  animation: orbit 24s linear infinite;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 30px 60px rgba(5, 30, 64, 0.18));
+}
+@keyframes orbit {
+  0%   { transform: rotate(-4deg); }
+  50%  { transform: rotate(4deg); }
+  100% { transform: rotate(-4deg); }
+}
+
+.bowlVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Price tag (LOOP recorder "$299 — Buy Now" style) */
+.priceTag {
+  position: absolute;
+  bottom: 6.5rem;
+  right: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  padding: 0.9rem 1.4rem;
+  background: #ffffff;
+  border: 1.5px solid var(--navy);
+  font-family: var(--font-mono);
+  z-index: 4;
+}
+.priceLabel {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.priceValue {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.02em;
+}
+.priceUnit {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Vertical product label (Mantis-style fine print) */
+.productLabel {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: rotate(-90deg) translateX(50%);
+  transform-origin: right center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+/* Scroll cue */
+.scrollCue {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 5;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.scrollLine {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  animation: scrollPulse 1.8s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50%      { opacity: 1; transform: scaleY(1); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .text {
+    padding: 5rem 1.5rem 0;
+    align-items: center;
+    text-align: center;
+  }
+  .h1Stack { width: 100%; }
+  .footMeta { justify-content: center; flex-wrap: wrap; }
+  .product { min-height: 320px; }
+  .priceTag { right: 1.5rem; bottom: 1.5rem; }
+  .nav { right: 1.5rem; gap: 1rem; }
+  .brandMark { left: 1.5rem; }
+}

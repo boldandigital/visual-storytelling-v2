@@ -1,25 +1,41 @@
-import VideoStage from '@/components/VideoStage';
-import HUD from '@/components/HUD';
-import EndOfTransmission from '@/components/EndOfTransmission';
-import Scene1 from '@/components/Scene1';
-import Scene2 from '@/components/Scene2';
-import Scene3 from '@/components/Scene3';
-import Scene4 from '@/components/Scene4';
-import Scene5 from '@/components/Scene5';
+import HeroOrbit from '@/components/HeroOrbit';
+import Marquee from '@/components/Marquee';
+import ServicesSimple from '@/components/ServicesSimple';
+import ProcessSimple from '@/components/ProcessSimple';
+import WorkSimple from '@/components/WorkSimple';
+import ContactSimple from '@/components/ContactSimple';
 
 export default function HomePage() {
   return (
     <>
-      <VideoStage />
-      <HUD />
-      <EndOfTransmission />
-      <main className="scenes">
-        <section id="top" className="scene"><Scene1 /></section>
-        <section id="services" className="scene"><Scene2 /></section>
-        <section id="work" className="scene"><Scene3 /></section>
-        <section id="process" className="scene"><Scene4 /></section>
-        <section id="contact" className="scene"><Scene5 /></section>
+      <HeroOrbit />
+      <Marquee />
+      <main>
+        <ServicesSimple />
+        <ProcessSimple />
+        <WorkSimple />
+        <ContactSimple />
       </main>
+      <footer
+        style={{
+          padding: '2.5rem 5rem',
+          background: '#ffffff',
+          borderTop: '1px solid rgba(5, 30, 64, 0.08)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.72rem',
+          letterSpacing: '0.2em',
+          color: 'var(--text-dim)',
+          textTransform: 'uppercase',
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem',
+        }}
+      >
+        <span>© Bold And Digital · 2026</span>
+        <span>Hamburg · Remote</span>
+        <span>v6.0 / HeroOrbit</span>
+      </footer>
     </>
   );
 }

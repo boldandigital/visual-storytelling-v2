@@ -6,16 +6,17 @@
 }
 
 html {
-  background: #fafbfc;
+  background: #ffffff;
   color-scheme: light;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #fafbfc;
+  background: #ffffff;
   color: #0a1929;
-  font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 14px;
   line-height: 1.5;
   letter-spacing: 0.02em;
@@ -23,211 +24,36 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* The page is 5 viewports tall — each viewport = one scene */
-.scenes {
-  position: relative;
-  z-index: 10;
-  /* 5 scenes × 100vh tall = 500vh of scroll travel */
-  height: 500vh;
-  pointer-events: none;
-}
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 img, video, svg { display: block; max-width: 100%; height: auto; }
 ul, ol { list-style: none; }
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.05;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 ::selection { background: #29f2f2; color: #0a1929; }
 
 :root {
-  /* Inverted for the "white stage" bowl hero (Jun 14 2026) */
-  --void: #fafbfc;
+  --void: #ffffff;
   --void-pure: #ffffff;
-  --cyan-core: #0bb5b5;       /* slightly darker cyan reads better on white */
+  --cyan-core: #0bb5b5;
   --cyan-bright: #29f2f2;
   --cyan-mid: #0bb5b5;
   --blue-city: #00a2ff;
   --blue-deep: #0050ff;
   --violet: #4a6cff;
-  --text: #0a1929;            /* dark navy for body text */
-  --text-dim: #5a6a7a;        /* dimmer dark for secondary text */
+  --text: #0a1929;
+  --text-dim: #5a6a7a;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
-  /* Brand tokens (BRAND.md, Jun 14 2026) */
   --navy: #051E40;
   --cyan: #29F2F2;
 }
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #fafbfc; }
-::-webkit-scrollbar-thumb { background: rgba(11, 181, 181, 0.3); }
-::-webkit-scrollbar-thumb:hover { background: rgba(11, 181, 181, 0.6); }
-
-/* ─────────────────────────────────────────────────────────
-   The video plays UNFILTERED. It is THE world.
-   ───────────────────────────────────────────────────────── */
-.video-stage {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  background: #fafbfc;
-}
-
-.video-stage video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.0);
-  width: 100vw;
-  height: 56.25vw;
-  max-height: 100vh;
-  max-width: 177.78vh;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1.4s ease;
-}
-
-.video-stage video[data-ready='true'] { opacity: 1; }
-
-/* ─────────────────────────────────────────────────────────
-   The 3D "shooting gallery". Each scene is a 100vh plane
-   in the document flow. Inside each scene, the panels
-   use perspective + translate3d to position themselves
-   in 3D space relative to the scene's center.
-   ───────────────────────────────────────────────────────── */
-.scene {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  /* Stronger perspective for dramatic 3D deformation.
-     At 800px perspective, an object at z=800 appears at half size;
-     at z=200, it appears at 80% size. */
-  perspective: 800px;
-  perspective-origin: 50% 50%;
-  transform-style: preserve-3d;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.scene-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-/* Position a text panel anywhere in 3D space */
-.panel {
-  position: absolute;
-  pointer-events: auto;
-  font-family: var(--font-mono);
-  color: var(--text);
-  transform-style: preserve-3d;
-  /* The 3D transform is set per panel; the Reveal wrapper's
-     entry animation uses --reveal-y for the Y offset. */
-  will-change: transform;
-}
-
-/* The Reveal wrapper adds a Y offset via --reveal-y without
-   clobbering the panel's 3D transform. Implemented by
-   overlaying a child-only opacity animation. */
-
-.mono {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-}
-
-.dim { color: var(--text-dim); }
-.cyan { color: var(--cyan-core); }
-.glow { /* removed — was for dark backgrounds */ }
-
-.eyebrow {
-  display: inline-block;
-  font-size: 0.7rem;
-  letter-spacing: 0.28em;
-  color: var(--cyan-core);
-  text-transform: uppercase;
-}
-
-.eyebrow::before {
-  content: '> ';
-  opacity: 0.7;
-}
-
-.h1 {
-  font-size: clamp(2.4rem, 6vw, 5.5rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 0.98;
-  color: var(--text);
-  /* Use Inter (display sans) for hero, falls back to system sans */
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-.h2 {
-  font-size: clamp(1.6rem, 3.2vw, 2.8rem);
-  font-weight: 600;
-  line-height: 1.05;
-  color: var(--text);
-  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-.lead {
-  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
-  color: var(--text);
-  max-width: 50ch;
-  line-height: 1.6;
-}
-
-.prompt {
-  color: var(--cyan-core);
-  margin-right: 0.5rem;
-}
-
-/* Buttons — white-stage treatment (Jun 14 2026) */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.4rem;
-  border: 1.5px solid var(--navy);
-  color: var(--navy);
-  font-size: 0.78rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 600;
-  background: #ffffff;
-  transition: all 0.2s ease;
-  font-family: var(--font-mono);
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background: var(--navy);
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(5, 30, 64, 0.18);
-}
-
-.btn .arrow { transition: transform 0.2s ease; }
-.btn:hover .arrow { transform: translateX(4px); }
-
-.btn--ghost {
-  border-color: rgba(5, 30, 64, 0.3);
-  color: var(--text);
-  background: transparent;
-}
-.btn--ghost:hover {
-  border-color: var(--navy);
-  color: var(--navy);
-  background: rgba(5, 30, 64, 0.04);
-  box-shadow: none;
-  transform: translateY(-1px);
-}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #ffffff; }
+::-webkit-scrollbar-thumb { background: rgba(5, 30, 64, 0.18); }
+::-webkit-scrollbar-thumb:hover { background: rgba(5, 30, 64, 0.4); }

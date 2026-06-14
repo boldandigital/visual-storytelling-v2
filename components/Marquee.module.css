@@ -1,0 +1,46 @@
+/* Marquee — horizontally scrolling text band, infinite loop */
+.marquee {
+  width: 100%;
+  background: var(--navy);
+  color: #ffffff;
+  border-top: 1.5px solid var(--cyan);
+  border-bottom: 1.5px solid var(--cyan);
+  overflow: hidden;
+  position: relative;
+  z-index: 4;
+  padding: 1.4rem 0;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  width: max-content;
+  animation: scroll-left 38s linear infinite;
+  will-change: transform;
+  font-family: var(--font-mono);
+}
+
+.item {
+  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #ffffff;
+  /* The "—" separator inherits white from the parent. The cyan
+     tint on word items is achieved via a child span in JSX. */
+}
+
+.item:nth-child(3n+1) {
+  color: var(--cyan);
+}
+
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.3333%); }
+}
+
+.marquee:hover .track {
+  animation-play-state: paused;
+}
