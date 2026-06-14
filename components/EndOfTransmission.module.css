@@ -1,0 +1,91 @@
+/* EndOfTransmission — white-stage treatment (Jun 14 2026).
+   Fades in as the user reaches the end of the page. */
+
+.wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  transition: opacity 0.05s linear;
+}
+
+.backing {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(250, 251, 252, 0.6) 0%, rgba(250, 251, 252, 0.9) 60%);
+  z-index: -1;
+}
+
+.mark {
+  position: relative;
+  width: clamp(220px, 32vw, 360px);
+  animation: markPulse 2.4s ease-in-out infinite;
+}
+
+.svg { width: 100%; height: auto; }
+
+@keyframes markPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  color: var(--cyan-core);
+  letter-spacing: 0.32em;
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+.brandName {
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  color: var(--navy);
+  letter-spacing: 0.24em;
+  font-weight: 600;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.subline {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.18em;
+}
+
+.signoff {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  pointer-events: auto;
+}
+
+.signoff a {
+  color: var(--cyan-core);
+  text-decoration: underline;
+  text-decoration-color: rgba(11, 181, 181, 0.4);
+  text-underline-offset: 4px;
+}
+
+.signoff a:hover {
+  text-decoration-color: var(--cyan-core);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}

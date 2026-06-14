@@ -1,0 +1,530 @@
+/* ─────────────────────────────────────────────────────────
+   Each scene is a 100vh "shot". Panels are positioned in 3D
+   space at moments of the video's arc.
+   ───────────────────────────────────────────────────────── */
+
+/* Shared panel base */
+.panel {
+  position: absolute;
+  pointer-events: auto;
+  font-family: var(--font-mono);
+  color: var(--text);
+}
+
+/* Shared text styles inside panels */
+.line { display: block; }
+
+.accent {
+  color: var(--cyan-core);
+}
+
+.caret {
+  display: inline-block;
+  color: var(--cyan-core);
+  opacity: 0.7;
+  margin: 0 0.3em;
+  animation: blink 1.6s steps(2) infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 0.7; }
+  51%, 100% { opacity: 0.2; }
+}
+
+/* ───────────── SCENE 01 — ABYSS ───────────── */
+/* Camera looks up at the soft cyan light source in a dark void.
+   Content: H1 large, centered, slightly offset for depth. */
+
+/* Service tags cluster — small, dim, horizontal row above the H1.
+   The four brand pillars, one tagline each, sit like context
+   tags not navigation. */
+.abyssTags {
+  top: 18%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+.abyssTags span { display: inline-block; }
+.abyssTags span + span::before {
+  content: "//";
+  margin: 0 0.9em;
+  opacity: 0.4;
+}
+
+.abyssEyebrow {
+  top: 28%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.32em;
+}
+
+.abyssH1 {
+  top: 32%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 80px);
+  text-align: center;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* Layered H1 — mixed weights within a single block.
+   Thin words set the rhythm; the bold accent word is the punch.
+   mix-blend-mode: difference inverts the text where it crosses
+   the dark bowl video (text becomes white over navy). */
+.h1Layered {
+  font-family: var(--font-inter, 'Inter'), system-ui, -apple-system, sans-serif;
+  font-size: clamp(1.8rem, 5.5vw, 4.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  mix-blend-mode: difference;
+  text-transform: none;
+  font-weight: 300;        /* default — children override to .bold */
+}
+.h1Layered .line { display: block; }
+.h1Layered .thin { font-weight: 300; opacity: 0.85; }
+.h1Layered .bold { font-weight: 800; }
+.h1Layered .italic { font-style: italic; font-weight: 300; }
+
+.abyssLead {
+  top: 82%;
+  left: 50%;
+  transform: translate3d(-50%, 0, -50px);
+  text-align: center;
+  width: 90%;
+  max-width: 700px;
+}
+
+.abyssCTA {
+  top: 92%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 40px);
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ───────────── SCENE 02 — WARP TUNNEL ───────────── */
+/* Camera flies through horizontal streaks. Services appear
+   like data points flying past the camera, spread across
+   the viewport with perspective. */
+
+.warpHeader {
+  top: 6%;
+  left: 6%;
+  transform: translate3d(0, 0, 60px);
+  width: 36%;
+  max-width: 440px;
+}
+
+.warpService01 {
+  top: 22%;
+  left: 48%;
+  transform: translate3d(-50%, 0, 200px);
+  width: 32%;
+  opacity: 0.95;
+}
+
+.warpService02 {
+  top: 38%;
+  right: 6%;
+  transform: translate3d(0, 0, 100px);
+  width: 32%;
+  text-align: right;
+}
+
+.warpService03 {
+  top: 55%;
+  left: 6%;
+  transform: translate3d(0, 0, 280px);
+  width: 32%;
+}
+
+.warpService04 {
+  top: 72%;
+  right: 8%;
+  transform: translate3d(0, 0, 80px);
+  width: 34%;
+  text-align: right;
+}
+
+.warpService05 {
+  top: 86%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 350px);
+  width: 32%;
+  text-align: center;
+}
+
+.serviceItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  border-left: 1px solid var(--cyan-core);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.warpService02 .serviceItem,
+.warpService04 .serviceItem {
+  border-left: 0;
+  border-right: 1px solid var(--cyan-core);
+}
+
+.warpService05 .serviceItem {
+  border-left: 0;
+  border-top: 1px solid var(--cyan-core);
+  border-bottom: 1px solid var(--cyan-core);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.svcN {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--cyan-core);
+}
+
+.svcTitle {
+  font-size: clamp(1.1rem, 1.6vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+.svcDesc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ───────────── SCENE 03 — CYBERNETIC CITY ───────────── */
+/* Camera glides over dark monoliths. Content: client work
+   as a single panel of telemetry on the left, with the
+   right side open so the world is visible. */
+
+.cityHeader {
+  top: 8%;
+  right: 5%;
+  transform: translate3d(0, 0, 100px);
+  width: 36%;
+  max-width: 480px;
+  text-align: right;
+}
+
+.cityList {
+  top: 28%;
+  left: 4%;
+  transform: translate3d(0, 0, 0) rotateX(2deg) rotateY(-3deg);
+  width: 50%;
+  max-width: 720px;
+  transform-origin: top left;
+}
+
+.workList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(5, 30, 64, 0.15);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+}
+
+.workList li {
+  display: grid;
+  grid-template-columns: 30px 60px 1fr 2.5fr;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(5, 30, 64, 0.1);
+  align-items: baseline;
+  font-size: 0.85rem;
+}
+
+.wN {
+  color: var(--cyan-core);
+  font-variant-numeric: tabular-nums;
+}
+
+.wYear {
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.wClient {
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+.wDesc {
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 800px) {
+  .workList li { grid-template-columns: 24px 1fr; gap: 0.4rem 0.75rem; }
+  .wN { grid-row: 1; }
+  .wYear { grid-row: 2; }
+  .wClient { grid-row: 1; grid-column: 2; }
+  .wDesc { grid-row: 3; grid-column: 1 / -1; padding-top: 0.25rem; }
+}
+
+/* ───────────── SCENE 04 — CENTRAL BEAM ───────────── */
+/* Camera focuses on the central energy pillar. Process
+   steps appear as 4 numbered annotations around the
+   center. */
+
+.beamHeader {
+  top: 6%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 120px);
+  text-align: center;
+  width: 90%;
+  max-width: 700px;
+}
+
+.beamStep01 {
+  top: 28%;
+  left: 6%;
+  transform: translate3d(0, 0, 60px) rotateY(4deg);
+  width: 28%;
+  transform-origin: top left;
+}
+
+.beamStep02 {
+  top: 28%;
+  right: 6%;
+  transform: translate3d(0, 0, 60px) rotateY(-4deg);
+  width: 28%;
+  text-align: right;
+  transform-origin: top right;
+}
+
+.beamStep03 {
+  top: 60%;
+  left: 6%;
+  transform: translate3d(0, 0, 0) rotateY(4deg);
+  width: 28%;
+  transform-origin: top left;
+}
+
+.beamStep04 {
+  top: 60%;
+  right: 6%;
+  transform: translate3d(0, 0, 0) rotateY(-4deg);
+  width: 28%;
+  text-align: right;
+  transform-origin: top right;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 0.85rem;
+  align-items: baseline;
+  padding: 0.85rem 1rem;
+  border-left: 1px solid var(--cyan-core);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.beamStep02 .step,
+.beamStep04 .step {
+  border-left: 0;
+  border-right: 1px solid var(--cyan-core);
+}
+
+.sN {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--cyan-core);
+}
+
+.sTitle {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: clamp(0.95rem, 1.4vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+.sDur {
+  grid-column: 3;
+  grid-row: 1;
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+}
+
+.sDesc {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-top: 0.4rem;
+}
+
+/* ───────────── SCENE 05 — REVEAL ───────────── */
+/* Camera arrives at the center, the energy cloud bursts
+   and reveals the brand. Content: contact terminal
+   centered, EndOfTransmission overlay takes over. */
+
+.revealHeader {
+  top: 8%;
+  left: 4%;
+  transform: translate3d(0, 0, 80px);
+  width: 40%;
+  max-width: 500px;
+}
+
+.revealContact {
+  top: 32%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0) rotateX(3deg);
+  width: 90%;
+  max-width: 800px;
+  transform-origin: center center;
+}
+
+.terminal {
+  border: 1px solid rgba(5, 30, 64, 0.2);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  font-size: 0.85rem;
+  position: relative;
+  box-shadow: 0 4px 24px rgba(5, 30, 64, 0.08);
+}
+
+.terminal::before,
+.terminal::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--cyan-core);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.terminal::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
+.terminal::after { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid; }
+
+.tHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid rgba(5, 30, 64, 0.1);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.tDots { display: flex; gap: 0.4rem; }
+.tDots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2a3a4a;
+}
+.tDots span:nth-child(1) { background: #ff5f57; }
+.tDots span:nth-child(2) { background: #febc2e; }
+.tDots span:nth-child(3) { background: #28c840; }
+
+.tPath { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); }
+
+.tBody { padding: 1.5rem 1.25rem 1.75rem; font-family: var(--font-mono); }
+
+.tLine {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.tPrompt { color: var(--cyan-core); font-weight: 600; }
+
+.tCaret {
+  display: inline-block;
+  color: var(--cyan-core);
+  animation: blink 1.1s steps(2) infinite;
+  margin-left: 4px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.statusGrid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0;
+  border: 1px solid rgba(5, 30, 64, 0.15);
+}
+
+.statusCell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border-right: 1px solid rgba(5, 30, 64, 0.1);
+  border-bottom: 1px solid rgba(5, 30, 64, 0.1);
+}
+
+.statusK {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.statusV {
+  font-size: 0.82rem;
+  color: var(--cyan-core);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan-core);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.tAction {
+  color: var(--cyan-core);
+  text-decoration: underline;
+  text-decoration-color: rgba(11, 181, 181, 0.3);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+.tAction:hover { text-decoration-color: var(--cyan-core); }
