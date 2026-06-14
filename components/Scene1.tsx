@@ -21,33 +21,36 @@ export default function Scene1() {
   // Z is very large (up to 1000px back) for dramatic perspective.
   // Scale is inverse-Z (1 - z/1000) so panels visibly shrink as
   // they go back in Z, like objects in the world.
-  const h1X = 1200 - p * 1500;   // 1200 → -300 (flies in from far right, lands centered)
-  const h1Z = 800 - p * 720;     // 800 → 80 (dramatic back-to-front)
-  const h1Scale = 0.4 + p * 0.6; // 0.4 → 1.0 (visibly scales up as it approaches)
-  const h1RotY = 12 - p * 12;    // 12deg → 0 (slight tilt toward camera on arrival)
-  const h1Op = p < 0.05 ? 0 : Math.min(1, (p - 0.05) / 0.15);
-
-  const eyebrowX = -800 + p * 800; // -800 → 0 (flies in from far left)
-  const eyebrowZ = 600 - p * 540;  // 600 → 60
-  const eyebrowScale = 0.5 + p * 0.5;
-  const eyebrowOp = Math.min(1, p / 0.1);
-
-  const leadY = 200 - p * 200;     // 200 → 0 (rises into place from below)
-  const leadZ = 400 - p * 360;
-  const leadScale = 0.6 + p * 0.4;
-  const leadOp = p < 0.3 ? 0 : Math.min(1, (p - 0.3) / 0.2);
-
-  const ctaZ = 300 - p * 240;
-  const ctaScale = 0.7 + p * 0.3;
-  const ctaOp = p < 0.5 ? 0 : Math.min(1, (p - 0.5) / 0.15);
+  // H1 is fully visible at p=0 (the "first frame") and stays there
+  // — we don't gate the hero behind scroll motion.
+  // All panels keep the -50% horizontal translate baked in so they
+  // remain centered as CSS sets `left: 50%`.
+  const h1X = -200 * p;                         // 0 → -200 (subtle drift)
+  const h1Transform = `translate3d(calc(-50% + ${h1X}px), 0, 0) scale(${1})`;
+  // Eyebrow: stay close to z=0 so it's fully visible. Just a tiny
+  // x-drift on scroll to keep it from feeling glued.
+  const eyebrowTransform = `translate3d(calc(-50% + ${p * 100}px), 0, 0) scale(${1})`;
+  const leadTransform = `translate3d(-50%, 0, 0) scale(${1})`;
+  const ctaTransform = `translate3d(-50%, 0, 0) scale(${1})`;
 
   return (
     <div className="scene-inner" ref={(el) => { ref.current = el?.parentElement ?? null; }}>
       <Reveal
+        className={`${styles.panel} ${styles.abyssTags}`}
+        style={{ opacity: 1 }}
+      >
+        <span>brand</span>
+        <span>websites</span>
+        <span>imagery</span>
+        <span>ai</span>
+        <span>hosting</span>
+      </Reveal>
+
+      <Reveal
         className={`${styles.panel} ${styles.abyssEyebrow}`}
         style={{
-          transform: `translate3d(${eyebrowX}px, 0, ${eyebrowZ}px) scale(${eyebrowScale})`,
-          opacity: eyebrowOp,
+          transform: eyebrowTransform,
+          opacity: 1,
         }}
       >
         <span className="eyebrow">./initialize_studio --brand=boldandigital</span>
@@ -56,25 +59,28 @@ export default function Scene1() {
       <Reveal
         className={`${styles.panel} ${styles.abyssH1}`}
         style={{
-          transform: `translate3d(${h1X}px, 0, ${h1Z}px) scale(${h1Scale}) rotateY(${h1RotY}deg)`,
-          opacity: h1Op,
+          transform: h1Transform,
+          opacity: 1,
         }}
       >
-        <h1 className="h1">
-          <span className={styles.line}>WE BUILD</span>
-          <span className={`${styles.line} ${styles.accent}`}>
-            <span className={styles.caret}>_</span>SCROLL-DRIVEN
+        <h1 className={`h1 ${styles.h1Layered}`}>
+          <span className={`${styles.line} ${styles.thin}`}>we build</span>
+          <span className={`${styles.line} ${styles.thin} ${styles.italic}`}>
+            &amp; strategy
+          </span>
+          <span className={`${styles.line} ${styles.bold} ${styles.accent}`}>
+            <span className={styles.caret}>_</span>scroll-driven
             <span className={styles.caret}>_</span>
           </span>
-          <span className={styles.line}>DIGITAL WORLDS.</span>
+          <span className={`${styles.line} ${styles.thin}`}>digital worlds.</span>
         </h1>
       </Reveal>
 
       <Reveal
         className={`${styles.panel} ${styles.abyssLead}`}
         style={{
-          transform: `translate3d(-50%, ${leadY}px, ${leadZ}px) scale(${leadScale})`,
-          opacity: leadOp,
+          transform: leadTransform,
+          opacity: 1,
         }}
       >
         <p className="lead">
@@ -85,8 +91,8 @@ export default function Scene1() {
       <Reveal
         className={`${styles.panel} ${styles.abyssCTA}`}
         style={{
-          transform: `translate3d(-50%, 0, ${ctaZ}px) scale(${ctaScale})`,
-          opacity: ctaOp,
+          transform: ctaTransform,
+          opacity: 1,
         }}
       >
         <a href="#contact" className="btn">INITIALIZE_PROJECT <span className="arrow">→</span></a>
