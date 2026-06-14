@@ -16,23 +16,19 @@
 
 .accent {
   color: var(--cyan-core);
-  text-shadow:
-    0 0 12px var(--cyan-core),
-    0 0 24px var(--cyan-mid),
-    0 0 48px rgba(0, 162, 255, 0.4);
 }
 
 .caret {
   display: inline-block;
   color: var(--cyan-core);
-  opacity: 0.5;
+  opacity: 0.7;
   margin: 0 0.3em;
   animation: blink 1.6s steps(2) infinite;
 }
 
 @keyframes blink {
-  0%, 50% { opacity: 0.5; }
-  51%, 100% { opacity: 0.15; }
+  0%, 50% { opacity: 0.7; }
+  51%, 100% { opacity: 0.2; }
 }
 
 /* ───────────── SCENE 01 — ABYSS ───────────── */
@@ -133,7 +129,7 @@
   gap: 0.4rem;
   padding: 0.85rem 1rem;
   border-left: 1px solid var(--cyan-core);
-  background: rgba(0, 4, 8, 0.55);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(4px);
 }
 
@@ -147,19 +143,18 @@
   border-left: 0;
   border-top: 1px solid var(--cyan-core);
   border-bottom: 1px solid var(--cyan-core);
-  background: rgba(0, 4, 8, 0.6);
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .svcN {
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   color: var(--cyan-core);
-  text-shadow: 0 0 6px var(--cyan-mid);
 }
 
 .svcTitle {
   font-size: clamp(1.1rem, 1.6vw, 1.6rem);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--text);
   text-transform: uppercase;
@@ -169,7 +164,6 @@
   font-size: 0.85rem;
   color: var(--text-dim);
   line-height: 1.5;
-  text-shadow: 0 0 4px rgba(0, 4, 8, 0.8);
 }
 
 /* ───────────── SCENE 03 — CYBERNETIC CITY ───────────── */
@@ -198,8 +192,8 @@
 .workList {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid rgba(0, 162, 255, 0.4);
-  background: rgba(0, 4, 8, 0.55);
+  border-top: 1px solid rgba(5, 30, 64, 0.15);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(6px);
 }
 
@@ -208,7 +202,7 @@
   grid-template-columns: 30px 60px 1fr 2.5fr;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid rgba(0, 162, 255, 0.3);
+  border-bottom: 1px solid rgba(5, 30, 64, 0.1);
   align-items: baseline;
   font-size: 0.85rem;
 }
@@ -216,7 +210,6 @@
 .wN {
   color: var(--cyan-core);
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 4px var(--cyan-mid);
 }
 
 .wYear {
@@ -303,7 +296,7 @@
   align-items: baseline;
   padding: 0.85rem 1rem;
   border-left: 1px solid var(--cyan-core);
-  background: rgba(0, 4, 8, 0.55);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(4px);
 }
 
@@ -319,7 +312,6 @@
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   color: var(--cyan-core);
-  text-shadow: 0 0 6px var(--cyan-mid);
 }
 
 .sTitle {
@@ -373,12 +365,12 @@
 }
 
 .terminal {
-  border: 1px solid rgba(0, 162, 255, 0.4);
-  background: rgba(0, 4, 8, 0.85);
+  border: 1px solid rgba(5, 30, 64, 0.2);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
   font-size: 0.85rem;
   position: relative;
-  box-shadow: 0 0 32px rgba(0, 162, 255, 0.15);
+  box-shadow: 0 4px 24px rgba(5, 30, 64, 0.08);
 }
 
 .terminal::before,
@@ -399,7 +391,7 @@
   align-items: center;
   gap: 1rem;
   padding: 0.6rem 1rem;
-  border-bottom: 1px solid rgba(0, 162, 255, 0.3);
+  border-bottom: 1px solid rgba(5, 30, 64, 0.1);
   font-size: 0.75rem;
   color: var(--text-dim);
 }
@@ -427,7 +419,7 @@
   margin-bottom: 0.4rem;
 }
 
-.tPrompt { color: var(--cyan-core); font-weight: 600; text-shadow: 0 0 4px var(--cyan-mid); }
+.tPrompt { color: var(--cyan-core); font-weight: 600; }
 
 .tCaret {
   display: inline-block;
@@ -446,7 +438,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0;
-  border: 1px solid rgba(0, 162, 255, 0.3);
+  border: 1px solid rgba(5, 30, 64, 0.15);
 }
 
 .statusCell {
@@ -454,8 +446,8 @@
   flex-direction: column;
   gap: 0.4rem;
   padding: 0.75rem 1rem;
-  border-right: 1px solid rgba(0, 162, 255, 0.3);
-  border-bottom: 1px solid rgba(0, 162, 255, 0.3);
+  border-right: 1px solid rgba(5, 30, 64, 0.1);
+  border-bottom: 1px solid rgba(5, 30, 64, 0.1);
 }
 
 .statusK {
@@ -471,7 +463,6 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  text-shadow: 0 0 4px var(--cyan-mid);
 }
 
 .dot {
@@ -480,7 +471,6 @@
   height: 6px;
   border-radius: 50%;
   background: var(--cyan-core);
-  box-shadow: 0 0 6px var(--cyan-core);
   animation: pulse 1.4s ease-in-out infinite;
 }
 
@@ -492,7 +482,7 @@
 .tAction {
   color: var(--cyan-core);
   text-decoration: underline;
-  text-decoration-color: rgba(0, 255, 255, 0.3);
+  text-decoration-color: rgba(11, 181, 181, 0.3);
   text-underline-offset: 3px;
   transition: text-decoration-color 0.2s ease;
 }

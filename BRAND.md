@@ -44,13 +44,23 @@ glow tone, not a brand color.
 - CTAs in caps with arrows: `INITIALIZE_PROJECT →`
 - Avoid: "solutions", "synergy", "transform your business", "cutting-edge"
 
-## Hero asset
+## Hero asset (Jun 14 2026: white-stage bowl concept)
 
-- **Video:** `public/videos/scroll-bg.mp4` (already exists, 16.5MB)
-- **Pattern:** scroll-linked scrub — video plays/loops as background,
-  scroll position drives opacity / blur / progress
-- **Layout:** video fills viewport as background, text overlay top-left
-  or center, panels appear on scroll
+- **Concept:** Everything in our orbit is **inside one brand bowl**.
+  A navy ceramic bowl holds the digital creative universe — book,
+  camera, microphone, polyhedron, server cube — orbiting a glowing
+  cyan ring. Symbolizes: "everything is under one brand."
+- **Stage:** Pure white seamless studio background (Apple product
+  photography aesthetic). Soft shadow under the bowl.
+- **Video:** `public/videos/scroll-bg.mp4` — slow orbital camera +
+  counter-rotating objects. 5.6s, 25fps, 1280×720, ~500KB.
+- **Pattern:** scroll-linked scrub — scroll position drives
+  `currentTime` over the first 100vh (single shot, no loop).
+  Video is unfiltered, plays UNCHANGED.
+- **Layout:** H1 upper-center (avoids the cyan ring on the rim),
+  eyebrow above, lead + CTAs below, scroll indicator bottom-right.
+- **Prior video:** `scroll-bg-cyber.mp4` (the 16MB sci-fi trailer)
+  is preserved if we ever want to A/B test.
 
 ## Verification
 

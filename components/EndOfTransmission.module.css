@@ -1,3 +1,6 @@
+/* EndOfTransmission — white-stage treatment (Jun 14 2026).
+   Fades in as the user reaches the end of the page. */
+
 .wrap {
   position: fixed;
   inset: 0;
@@ -15,14 +18,13 @@
 .backing {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(0, 4, 8, 0.92) 0%, rgba(0, 4, 8, 1) 60%);
+  background: radial-gradient(ellipse at center, rgba(250, 251, 252, 0.6) 0%, rgba(250, 251, 252, 0.9) 60%);
   z-index: -1;
 }
 
 .mark {
   position: relative;
   width: clamp(220px, 32vw, 360px);
-  filter: drop-shadow(0 0 16px #00ffff) drop-shadow(0 0 48px rgba(0, 162, 255, 0.4));
   animation: markPulse 2.4s ease-in-out infinite;
 }
 
@@ -46,22 +48,22 @@
 
 .eyebrow {
   font-size: 0.78rem;
-  color: #00ffff;
+  color: var(--cyan-core);
   letter-spacing: 0.32em;
-  text-shadow: 0 0 4px #00b8d4;
   animation: blink 1.4s ease-in-out infinite;
 }
 
 .brandName {
   font-size: clamp(1rem, 1.6vw, 1.4rem);
-  color: #d8e9f5;
+  color: var(--navy);
   letter-spacing: 0.24em;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .subline {
   font-size: 0.7rem;
-  color: #6a7a8a;
+  color: var(--text-dim);
   letter-spacing: 0.18em;
 }
 
@@ -73,15 +75,14 @@
 }
 
 .signoff a {
-  color: #00ffff;
+  color: var(--cyan-core);
   text-decoration: underline;
-  text-decoration-color: rgba(0, 255, 255, 0.4);
+  text-decoration-color: rgba(11, 181, 181, 0.4);
   text-underline-offset: 4px;
-  text-shadow: 0 0 6px #00b8d4;
 }
 
 .signoff a:hover {
-  text-decoration-color: #00ffff;
+  text-decoration-color: var(--cyan-core);
 }
 
 @keyframes blink {

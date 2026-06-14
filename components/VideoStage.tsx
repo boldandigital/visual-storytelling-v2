@@ -11,7 +11,7 @@ import { useEffect, useRef } from 'react';
  *  - The video only plays while the user is scrolling. When idle
  *    the video pauses (frozen at the user's last position).
  */
-const VIDEO_DURATION = 1.6;        // seconds
+const VIDEO_DURATION = 5.64;       // seconds (hero-bowl-v1.mp4)
 const SCROLL_BIND_FACTOR = 0.97;   // use 0-97% of the video for the scroll
 
 export default function VideoStage() {

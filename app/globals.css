@@ -6,15 +6,15 @@
 }
 
 html {
-  background: #000;
-  color-scheme: dark;
+  background: #fafbfc;
+  color-scheme: light;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: #000;
-  color: #d8e9f5;
+  background: #fafbfc;
+  color: #0a1929;
   font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
   font-size: 14px;
   line-height: 1.5;
@@ -42,26 +42,30 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
 
-::selection { background: #00ffff; color: #000; }
+::selection { background: #29f2f2; color: #0a1929; }
 
 :root {
-  --void: #000408;
-  --void-pure: #000000;
-  --cyan-core: #00ffff;
-  --cyan-bright: #80ffff;
-  --cyan-mid: #00b8d4;
+  /* Inverted for the "white stage" bowl hero (Jun 14 2026) */
+  --void: #fafbfc;
+  --void-pure: #ffffff;
+  --cyan-core: #0bb5b5;       /* slightly darker cyan reads better on white */
+  --cyan-bright: #29f2f2;
+  --cyan-mid: #0bb5b5;
   --blue-city: #00a2ff;
   --blue-deep: #0050ff;
   --violet: #4a6cff;
-  --text: #d8e9f5;
-  --text-dim: #6a7a8a;
+  --text: #0a1929;            /* dark navy for body text */
+  --text-dim: #5a6a7a;        /* dimmer dark for secondary text */
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+  /* Brand tokens (BRAND.md, Jun 14 2026) */
+  --navy: #051E40;
+  --cyan: #29F2F2;
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #000; }
-::-webkit-scrollbar-thumb { background: #00ffff40; }
-::-webkit-scrollbar-thumb:hover { background: #00ffff80; }
+::-webkit-scrollbar-track { background: #fafbfc; }
+::-webkit-scrollbar-thumb { background: rgba(11, 181, 181, 0.3); }
+::-webkit-scrollbar-thumb:hover { background: rgba(11, 181, 181, 0.6); }
 
 /* ─────────────────────────────────────────────────────────
    The video plays UNFILTERED. It is THE world.
@@ -72,7 +76,7 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: #000;
+  background: #fafbfc;
 }
 
 .video-stage video {
@@ -140,8 +144,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dim { color: var(--text-dim); }
-.cyan { color: var(--cyan-core); text-shadow: 0 0 6px var(--cyan-mid), 0 0 16px rgba(0, 162, 255, 0.4); }
-.glow { text-shadow: 0 0 8px var(--cyan-mid), 0 0 24px rgba(0, 162, 255, 0.5); }
+.cyan { color: var(--cyan-core); }
+.glow { /* removed — was for dark backgrounds */ }
 
 .eyebrow {
   display: inline-block;
@@ -149,7 +153,6 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.28em;
   color: var(--cyan-core);
   text-transform: uppercase;
-  text-shadow: 0 0 6px var(--cyan-mid);
 }
 
 .eyebrow::before {
@@ -159,19 +162,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .h1 {
   font-size: clamp(2.4rem, 6vw, 5.5rem);
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
   color: var(--text);
-  text-shadow: 0 0 16px rgba(0, 162, 255, 0.4);
+  /* Use Inter (display sans) for hero, falls back to system sans */
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .h2 {
   font-size: clamp(1.6rem, 3.2vw, 2.8rem);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.05;
   color: var(--text);
-  text-shadow: 0 0 12px rgba(0, 162, 255, 0.4);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .lead {
@@ -179,53 +183,51 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text);
   max-width: 50ch;
   line-height: 1.6;
-  text-shadow: 0 0 4px rgba(0, 4, 8, 0.8);
 }
 
 .prompt {
   color: var(--cyan-core);
   margin-right: 0.5rem;
-  text-shadow: 0 0 6px var(--cyan-mid);
 }
 
-/* Buttons */
+/* Buttons — white-stage treatment (Jun 14 2026) */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.7rem 1.2rem;
-  border: 1px solid var(--cyan-core);
-  color: var(--cyan-core);
+  padding: 0.75rem 1.4rem;
+  border: 1.5px solid var(--navy);
+  color: var(--navy);
   font-size: 0.78rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  font-weight: 500;
-  background: rgba(0, 255, 255, 0.04);
+  font-weight: 600;
+  background: #ffffff;
   transition: all 0.2s ease;
-  text-shadow: 0 0 4px var(--cyan-mid);
   font-family: var(--font-mono);
   pointer-events: auto;
+  cursor: pointer;
 }
 
 .btn:hover {
-  background: var(--cyan-core);
-  color: #000;
-  box-shadow: 0 0 24px var(--cyan-core), 0 0 48px var(--cyan-mid);
-  text-shadow: none;
+  background: var(--navy);
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(5, 30, 64, 0.18);
 }
 
 .btn .arrow { transition: transform 0.2s ease; }
 .btn:hover .arrow { transform: translateX(4px); }
 
 .btn--ghost {
-  border-color: rgba(0, 162, 255, 0.5);
+  border-color: rgba(5, 30, 64, 0.3);
   color: var(--text);
   background: transparent;
 }
 .btn--ghost:hover {
-  border-color: var(--cyan-core);
-  color: var(--cyan-core);
-  background: transparent;
-  box-shadow: 0 0 16px var(--cyan-mid);
-  text-shadow: 0 0 4px var(--cyan-mid);
+  border-color: var(--navy);
+  color: var(--navy);
+  background: rgba(5, 30, 64, 0.04);
+  box-shadow: none;
+  transform: translateY(-1px);
 }
